@@ -138,3 +138,12 @@
 - **原因**: 見出しの入場アニメーションは`SplitText`の`mask: "chars"`で1文字ずつ`overflow: hidden`のマスクに包んで実現しているが、そのマスクの高さは行の高さ(`leading-[1.05]`)に連動する。`Amiri Quran`はdescender(gの下部など)が大きめの装飾的フォントのため、行の高さがタイトすぎてマスクからはみ出た部分が切れていた。
 - **対応**: `components/Hero.tsx` の見出しの `leading-[1.05]` を `leading-[1.5]` に変更し、マスクの高さに余裕を持たせた。
 - **確認**: `npx tsc --noEmit` 成功。
+
+## 2026-07-09
+
+### fix: Vercelビルドが `npm error 404 object.` で失敗する問題を修正
+
+- **症状**: GitHubリポジトリをVercelにインポートしてデプロイしたところ、`npm install`が `404 Not Found - GET https://registry.npmjs.org/object./-/object.-1.2.1.tgz` で失敗。
+- **原因**: `package-lock.json`内で、実在するパッケージ `object.values`(eslint-plugin-react・jsx-ast-utilsの依存)の名前から「values」の部分だけが欠落し、存在しない`object.`というパッケージ名に化けていた(依存関係のキー2箇所、解決済みエントリのキー、`resolved`のtarball URLの計4箇所)。ローカルの`node_modules`には正しく`object.values`が入っていたため今まで気づかず、`npm install`で再生成してもなぜか同じ壊れた名前で書き出されてしまい、レジストリを直接`curl`で確認して初めてnpm CLI側の生成結果だけが壊れている(レジストリ自体は正常)と判明した。
+- **対応**: `registry.npmjs.org`から直接取得した正しいメタデータ(バージョン・integrityハッシュ・依存関係)をもとに、`package-lock.json`の該当4箇所を`object.values`に手動修正。
+- **確認**: `node_modules`を退避した状態で`npm ci`(Vercelと同じクリーンインストール)が成功することを確認。`npx tsc --noEmit` / `npm run lint` / `npm run build` すべて成功。修正をコミットしGitHubにpush済み(Vercel側は自動で再デプロイされるはずです)。
