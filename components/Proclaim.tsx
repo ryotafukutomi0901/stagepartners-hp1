@@ -37,7 +37,7 @@ export default function Proclaim() {
         "[data-proclaim-line]",
         {
           yPercent: 115,
-          duration: 1,
+          duration: 1.8,
           ease: "expo.out",
           stagger: 0.12,
         },
@@ -87,11 +87,10 @@ export default function Proclaim() {
                   <span key={line} className="block overflow-hidden">
                     <span
                       data-proclaim-line
-                      className={`block ${
-                        line === "主役は、その場所で挑戦する人たちだ。"
-                          ? "text-[1.4em] font-medium"
-                          : ""
-                      }`}
+                      className={`block ${line === "主役は、その場所で挑戦する人たちだ。"
+                        ? "text-[1.4em] font-medium"
+                        : ""
+                        }`}
                     >
                       {line}
                     </span>
