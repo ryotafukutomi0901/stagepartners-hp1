@@ -147,3 +147,12 @@
 - **原因**: `package-lock.json`内で、実在するパッケージ `object.values`(eslint-plugin-react・jsx-ast-utilsの依存)の名前から「values」の部分だけが欠落し、存在しない`object.`というパッケージ名に化けていた(依存関係のキー2箇所、解決済みエントリのキー、`resolved`のtarball URLの計4箇所)。ローカルの`node_modules`には正しく`object.values`が入っていたため今まで気づかず、`npm install`で再生成してもなぜか同じ壊れた名前で書き出されてしまい、レジストリを直接`curl`で確認して初めてnpm CLI側の生成結果だけが壊れている(レジストリ自体は正常)と判明した。
 - **対応**: `registry.npmjs.org`から直接取得した正しいメタデータ(バージョン・integrityハッシュ・依存関係)をもとに、`package-lock.json`の該当4箇所を`object.values`に手動修正。
 - **確認**: `node_modules`を退避した状態で`npm ci`(Vercelと同じクリーンインストール)が成功することを確認。`npx tsc --noEmit` / `npm run lint` / `npm run build` すべて成功。修正をコミットしGitHubにpush済み(Vercel側は自動で再デプロイされるはずです)。
+
+## 2026-07-11
+
+### style: `Company`セクションの見出し・本文を`Proclaim`セクションと同じ文字サイズに統一
+
+- **背景**: Hero直後の`Proclaim`セクション(「不動産や建築を扱うということは〜」)と`Company`セクション(「空間に、意義を。」)で文字サイズと左右余白を揃えてほしいという依頼。あわせて`Proclaim`内のキラーワード「主役は、その場所で挑戦する人たちだ。」は目立つようひと回り大きくしてほしいとのこと。
+- **確認事項**: 左右の余白(`px-6 sm:px-10 lg:px-16` / `max-w-[1520px]`)は`Hero`・`Proclaim`・`Company`の3セクションですでに共通だったため変更不要だった。キラーワードもすでに`text-[1.4em]`で他の行の1.4倍のサイズに指定済みだった。
+- **対応**: `components/Company.tsx`の見出し(`空間に、意義を。`)と本文段落のクラスを、`Company`独自のサイズ(`text-2xl sm:text-3xl` / `text-sm sm:text-base leading-loose`)から、`Proclaim`の本文と同じ`text-[1.7rem] sm:text-[1.9rem] lg:text-[2.3rem] leading-[1.65] tracking-[0.02em]`に統一。
+- **確認**: `npm run build`成功。`npm run dev`を起動しPlaywrightでスクロールしながらスクリーンショットを撮影し、`Company`の見出し・本文が`Proclaim`の文字サイズと揃っていること、キラーワードが周囲より大きく表示されていることを目視確認。
