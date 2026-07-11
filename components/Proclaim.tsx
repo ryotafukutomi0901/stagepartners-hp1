@@ -88,8 +88,8 @@ export default function Proclaim() {
                     <span
                       data-proclaim-line
                       className={`block ${line === "主役は、" || line === "その場所で挑戦する人たちだ。"
-                        ? "text-2xl font-medium leading-[1.7] text-foreground sm:text-3xl"
-                        : "text-sm font-normal leading-loose text-subtext sm:text-base"
+                        ? "text-2xl ml-4 font-medium leading-[1.7] text-foreground sm:text-3xl"
+                        : "text-sm ml-4 font-normal leading-loose text-subtext sm:text-base"
                         }`}
                     >
                       {line}
@@ -103,7 +103,7 @@ export default function Proclaim() {
           <a
             data-proclaim-sub
             href="#company"
-            className="mt-12 ml-4 inline-flex items-center gap-4 text-xs font-medium tracking-[0.2em] text-foreground transition-opacity hover:opacity-60"
+            className="mt-12 inline-flex items-center gap-4 text-xs font-medium tracking-[0.2em] text-foreground transition-opacity hover:opacity-60"
           >
             私たちの想い
             <span aria-hidden className="inline-block h-px w-9 bg-foreground" />
