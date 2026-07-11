@@ -6,7 +6,7 @@ import { scrollTriggerDefaults } from "@/lib/animations";
 
 const PROCLAIM_PARAGRAPHS = [
   ["不動産や建築を扱うということは、", "主役は私たちではない。"],
-  ["主役は、その場所で挑戦する人たちだ。"],
+  ["主役は、", "その場所で挑戦する人たちだ。"],
   ["私たちは、その人たちが輝くための舞台を創る。"],
 ];
 
@@ -87,7 +87,7 @@ export default function Proclaim() {
                   <span key={line} className="block overflow-hidden">
                     <span
                       data-proclaim-line
-                      className={`block ${line === "主役は、その場所で挑戦する人たちだ。"
+                      className={`block ${line === "主役は、" || line === "その場所で挑戦する人たちだ。"
                         ? "text-2xl font-medium leading-[1.7] text-foreground sm:text-3xl"
                         : "text-sm font-normal leading-loose text-subtext sm:text-base"
                         }`}
