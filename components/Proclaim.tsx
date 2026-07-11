@@ -103,7 +103,7 @@ export default function Proclaim() {
           <a
             data-proclaim-sub
             href="#company"
-            className="mt-12 inline-flex items-center gap-4 text-xs font-medium tracking-[0.2em] text-foreground transition-opacity hover:opacity-60"
+            className="mt-12 ml-4 inline-flex items-center gap-4 text-xs font-medium tracking-[0.2em] text-foreground transition-opacity hover:opacity-60"
           >
             私たちの想い
             <span aria-hidden className="inline-block h-px w-9 bg-foreground" />
