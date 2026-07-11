@@ -55,13 +55,13 @@ export default function Company() {
           </span>
           <h2
             data-company-text
-            className="mt-6 text-[1.7rem] font-medium leading-[1.65] tracking-[0.02em] text-foreground sm:text-[1.9rem] lg:text-[2.3rem]"
+            className="mt-6 text-2xl font-medium leading-[1.7] text-foreground sm:text-3xl"
           >
             空間に、意義を。
           </h2>
           <p
             data-company-text
-            className="mt-8 text-[1.7rem] font-normal leading-[1.65] tracking-[0.02em] text-subtext sm:text-[1.9rem] lg:text-[2.3rem]"
+            className="mt-6 text-sm font-normal leading-loose text-subtext sm:text-base"
           >
             建築は人の営みを受け止め、未来をつくる器です。
             <br />

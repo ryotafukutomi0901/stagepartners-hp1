@@ -156,3 +156,11 @@
 - **確認事項**: 左右の余白(`px-6 sm:px-10 lg:px-16` / `max-w-[1520px]`)は`Hero`・`Proclaim`・`Company`の3セクションですでに共通だったため変更不要だった。キラーワードもすでに`text-[1.4em]`で他の行の1.4倍のサイズに指定済みだった。
 - **対応**: `components/Company.tsx`の見出し(`空間に、意義を。`)と本文段落のクラスを、`Company`独自のサイズ(`text-2xl sm:text-3xl` / `text-sm sm:text-base leading-loose`)から、`Proclaim`の本文と同じ`text-[1.7rem] sm:text-[1.9rem] lg:text-[2.3rem] leading-[1.65] tracking-[0.02em]`に統一。
 - **確認**: `npm run build`成功。`npm run dev`を起動しPlaywrightでスクロールしながらスクリーンショットを撮影し、`Company`の見出し・本文が`Proclaim`の文字サイズと揃っていること、キラーワードが周囲より大きく表示されていることを目視確認。
+
+### style: `Proclaim`・`Company`の見出し・本文サイズを`Business`セクション基準に統一
+
+- **背景**: 上記の対応(`Company`を`Proclaim`基準に統一)は方向が逆で、基準にすべきは`Business`(事業内容)セクションのサイズだったとの指摘。改めて`Proclaim`・`Company`の両方を`Business`の見出し・本文サイズへ統一してほしいという依頼。
+- **対応**:
+  - `components/Proclaim.tsx`: 見出し(`不動産や建築を扱うということは〜`)のクラスを`text-[1.7rem] sm:text-[1.9rem] lg:text-[2.3rem] leading-[1.65] tracking-[0.02em]`から、`Business`のh2と同じ`text-2xl sm:text-3xl leading-[1.7]`に変更。
+  - `components/Company.tsx`: 見出し(`空間に、意義を。`)を同じく`text-2xl sm:text-3xl leading-[1.7]`に、本文段落を`Business`のintro文と同じ`mt-6 text-sm sm:text-base leading-loose`に変更(従来は見出しと同サイズの`text-[1.7rem]〜`だった)。
+- **確認**: `npm run build`成功。
