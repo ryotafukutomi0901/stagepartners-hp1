@@ -84,7 +84,7 @@ export default function Proclaim() {
             {PROCLAIM_PARAGRAPHS.map((lines, i) => (
               <span key={i} className={`block ${i > 0 ? "mt-6" : ""}`}>
                 {lines.map((line) => (
-                  <span key={line} className="block overflow-hidden">
+                  <span key={line} className="block overflow-hidden ml-4">
                     <span
                       data-proclaim-line
                       className={`block ${line === "主役は、" || line === "その場所で挑戦する人たちだ。"
