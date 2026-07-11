@@ -80,7 +80,7 @@ export default function Proclaim() {
 
       <div className="mx-auto grid w-full max-w-[1520px] grid-cols-1 items-center gap-14 px-6 py-20 sm:px-10 lg:grid-cols-[0.72fr_1fr] lg:gap-16 lg:py-0 lg:px-16">
         <div className="max-w-lg">
-          <h2 className="text-2xl font-medium leading-[1.7] text-foreground sm:text-3xl">
+          <h2>
             {PROCLAIM_PARAGRAPHS.map((lines, i) => (
               <span key={i} className={`block ${i > 0 ? "mt-6" : ""}`}>
                 {lines.map((line) => (
@@ -88,8 +88,8 @@ export default function Proclaim() {
                     <span
                       data-proclaim-line
                       className={`block ${line === "主役は、その場所で挑戦する人たちだ。"
-                        ? "text-[1.4em] font-medium"
-                        : ""
+                        ? "text-2xl font-medium leading-[1.7] text-foreground sm:text-3xl"
+                        : "text-sm font-normal leading-loose text-subtext sm:text-base"
                         }`}
                     >
                       {line}

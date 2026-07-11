@@ -164,3 +164,12 @@
   - `components/Proclaim.tsx`: 見出し(`不動産や建築を扱うということは〜`)のクラスを`text-[1.7rem] sm:text-[1.9rem] lg:text-[2.3rem] leading-[1.65] tracking-[0.02em]`から、`Business`のh2と同じ`text-2xl sm:text-3xl leading-[1.7]`に変更。
   - `components/Company.tsx`: 見出し(`空間に、意義を。`)を同じく`text-2xl sm:text-3xl leading-[1.7]`に、本文段落を`Business`のintro文と同じ`mt-6 text-sm sm:text-base leading-loose`に変更(従来は見出しと同サイズの`text-[1.7rem]〜`だった)。
 - **確認**: `npm run build`成功。
+
+### style: `Proclaim`のキラーワードと通常行を明確に2階層のサイズへ分離
+
+- **背景**: `Proclaim`の見出し(「不動産や建築を扱うということは〜」等)が全行同一サイズ(`text-2xl sm:text-3xl`)になっていたが、通常行は`Company`の本文と同じ小さいサイズ、キラーワード(「主役は、その場所で挑戦する人たちだ。」)だけは`Company`の見出しと同じ大きいサイズ・色にしてほしいという依頼。
+- **対応**: `components/Proclaim.tsx`の`PROCLAIM_PARAGRAPHS`各行の`className`を行ごとに分岐。
+  - 通常行(「不動産や建築を扱うということは、」「主役は私たちではない。」「私たちは、その人たちが輝くための舞台を創る。」): `text-sm font-normal leading-loose text-subtext sm:text-base`。
+  - キラーワード(「主役は、その場所で挑戦する人たちだ。」): `text-2xl font-medium leading-[1.7] text-foreground sm:text-3xl`。
+  - 親`<h2>`側の一律クラスは削除し、行単位のクラスに一本化。
+- **確認**: `npm run build`成功。
