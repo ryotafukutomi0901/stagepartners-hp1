@@ -1,8 +1,30 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useScopedGsap, gsap } from "@/hooks/useGsap";
 import { scrollTriggerDefaults } from "@/lib/animations";
+
+// 会社情報サマリー。正式な会社概要ページ(/company)へ誘導する。
+// 数値・許認可番号は正式決定まで仮の値。決まり次第差し替える。
+const PROFILE = [
+  { label: "会社名", value: "株式会社STAGE PARTNERS" },
+  { label: "代表者", value: "代表取締役　○○　○○" },
+  { label: "設立", value: "20XX年○月" },
+  { label: "所在地", value: "〒410-0055　静岡県沼津市高島本町16-16 高島本町ビル2F" },
+  {
+    label: "事業内容",
+    value: "不動産事業（仲介・管理・買取再販）／ 建設事業（リフォーム）",
+  },
+  {
+    label: "許認可",
+    value: [
+      "宅地建物取引業免許　静岡県知事（1）第14684号",
+      "一般建設業登録　静岡県知事許可（般-6）第39891号",
+      "一級建築士事務所　静岡県知事登録（2）第7830号",
+    ],
+  },
+];
 
 export default function Company() {
   const sectionRef = useScopedGsap<HTMLElement>(() => {
@@ -19,9 +41,9 @@ export default function Company() {
 
     gsap.from("[data-company-text]", {
       opacity: 0,
-      y: 26,
+      y: 24,
       duration: 1,
-      stagger: 0.14,
+      stagger: 0.1,
       ease: "power2.out",
       scrollTrigger: {
         trigger: "[data-company-text]",
@@ -31,22 +53,26 @@ export default function Company() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="company" className="w-full bg-background space-y-16 lg:space-y-24">
-      <div className="mx-auto grid w-full max-w-[1520px] grid-cols-1 items-center gap-14 px-6 py-20 sm:px-10 lg:grid-cols-[1fr_0.72fr] lg:gap-16 lg:py-0 lg:px-16">
+    <section
+      ref={sectionRef}
+      id="company"
+      className="w-full bg-background px-6 py-24 sm:px-10 lg:px-16 lg:py-32 xl:px-24"
+    >
+      <div className="mx-auto grid w-full max-w-[1520px] grid-cols-1 items-center gap-12 lg:grid-cols-[1fr_0.9fr] lg:gap-20">
         <div
           data-company-image
-          className="relative h-[46vh] overflow-hidden bg-[#161513] lg:h-[78vh]"
+          className="media relative aspect-[4/3] overflow-hidden bg-[#161513] lg:aspect-[4/5]"
         >
           <Image
             src="/companyimage1.png"
-            alt="STAGE PARTNERSが手がける建築空間"
+            alt="STAGE PARTNERSの拠点と街並み"
             fill
-            sizes="(min-width: 1024px) 58vw, 100vw"
-            className="object-cover object-[25%_center] contrast-[1.2] brightness-[0.8]"
+            sizes="(min-width: 1024px) 52vw, 100vw"
+            className="object-cover object-[25%_center]"
           />
         </div>
 
-        <div className="max-w-lg">
+        <div>
           <span
             data-company-text
             className="block text-xs font-medium tracking-[0.25em] text-subtext"
@@ -55,20 +81,43 @@ export default function Company() {
           </span>
           <h2
             data-company-text
-            className="mt-6 text-2xl font-medium leading-[1.7] text-foreground sm:text-3xl"
+            className="mt-6 text-2xl font-medium leading-[1.6] text-foreground sm:text-3xl lg:text-[2.4rem]"
           >
-            空間に、意義を。
+            会社概要
           </h2>
-          <p
+
+          <dl data-company-text className="mt-10 border-t border-border">
+            {PROFILE.map((row) => (
+              <div
+                key={row.label}
+                className="flex flex-col gap-1 border-b border-border py-5 sm:flex-row sm:gap-8"
+              >
+                <dt className="text-xs font-medium tracking-[0.15em] text-subtext sm:w-28 sm:shrink-0 sm:pt-1">
+                  {row.label}
+                </dt>
+                <dd className="text-sm font-normal leading-relaxed text-foreground sm:text-base">
+                  {Array.isArray(row.value)
+                    ? row.value.map((line) => (
+                        <span key={line} className="block">
+                          {line}
+                        </span>
+                      ))
+                    : row.value}
+                </dd>
+              </div>
+            ))}
+          </dl>
+
+          <Link
             data-company-text
-            className="mt-6 text-sm font-normal leading-loose text-subtext sm:text-base"
+            href="/company"
+            className="mt-10 inline-flex items-center gap-3 text-xs font-medium tracking-[0.2em] text-foreground transition-opacity hover:opacity-60"
           >
-            建築は人の営みを受け止め、未来をつくる器です。
-            <br />
-            私たちSTAGE PARTNERSは、建築と不動産の力で人と場所の可能性を引き出し、これからの街と挑戦者たちのための舞台を創り続けます。
-          </p>
+            会社概要を詳しく見る
+            <span aria-hidden className="inline-block h-px w-9 bg-foreground" />
+          </Link>
         </div>
       </div>
-    </section >
+    </section>
   );
 }

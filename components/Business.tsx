@@ -5,27 +5,41 @@ import Link from "next/link";
 import { useScopedGsap, gsap } from "@/hooks/useGsap";
 import { scrollTriggerDefaults } from "@/lib/animations";
 
-// 実際の建築・不動産の写真が用意でき次第、各 image のパスだけ差し替えれば反映されます。
-// (現在はモックとして共通の仮画像を使用しています)
-// href先のページは制作予定のため、現時点では未作成(アクセスすると404になります)
+// 事業は優先度順に構成する。
+// 1. 不動産事業(仲介・管理)  2. 建設事業(リフォーム)
+// 画像パスは実写が用意でき次第そのまま差し替えれば反映される。
 const DIVISIONS = [
   {
     index: "01",
-    title: "建築ソリューション",
+    en: "REAL ESTATE",
+    title: "不動産事業",
+    lead: "仲介・管理・買取再販",
     description:
-      "住まいから商業施設まで、企画・設計・監理を一貫して手がけ、お客様の期待と想いを形にします。",
-    image: "/constructimage1.jpg",
-    imagePosition: "object-center",
-    href: "/construction",
-  },
-  {
-    index: "02",
-    title: "不動産ソリューション",
-    description:
-      "売買・賃貸・管理まで、暮らしと事業の基盤となる不動産をトータルにサポートし、確かな価値へとつなぎます。",
+      "地主さま・オーナーさまの「貸したい・売りたい」に応え、確かな価値へとつなぎます。",
+    points: [
+      "土地・建物を買い上げ、リフォーム等で価値を高めて次の所有者へ",
+      "オーナーさまと入居者の間に立つ、賃貸の仲介と管理",
+      "ご要望に沿って、最適な借主・買主をお探しする",
+    ],
     image: "/real-estateimage1.png",
     imagePosition: "object-[70%_80%]",
     href: "/real-estate",
+  },
+  {
+    index: "02",
+    en: "RENOVATION",
+    title: "建設事業",
+    lead: "リフォーム・リノベーション",
+    description:
+      "空室・老朽化・資産価値の低下といった課題を、建物への手入れで解決します。",
+    points: [
+      "空室対策・原状回復から本格的なリノベーションまで",
+      "費用対効果を見据えた、無理のない改修プラン",
+      "自社で不動産まで見通すからこそ描ける、活かす前提の設計",
+    ],
+    image: "/constructimage1.jpg",
+    imagePosition: "object-center",
+    href: "/construction",
   },
 ];
 
@@ -43,30 +57,27 @@ export default function Business() {
       },
     });
 
-    const cards = gsap.utils.toArray<HTMLElement>("[data-business-card]");
-    cards.forEach((card) => {
+    const rows = gsap.utils.toArray<HTMLElement>("[data-business-row]");
+    rows.forEach((row) => {
       const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: card,
-          ...scrollTriggerDefaults,
-        },
+        scrollTrigger: { trigger: row, ...scrollTriggerDefaults },
       });
 
-      tl.from(card.querySelector("[data-business-image]"), {
+      tl.from(row.querySelector("[data-business-image]"), {
         opacity: 0,
         scale: 1.08,
         duration: 1.3,
         ease: "power1.out",
       }).from(
-        card.querySelectorAll("[data-business-text]"),
+        row.querySelectorAll("[data-business-text]"),
         {
           opacity: 0,
-          y: 18,
+          y: 20,
           duration: 0.9,
           stagger: 0.1,
           ease: "power2.out",
         },
-        "-=0.7",
+        "-=0.8",
       );
     });
   }, []);
@@ -75,75 +86,99 @@ export default function Business() {
     <section
       ref={sectionRef}
       id="business"
-      className="w-full bg-background px-6 py-28 sm:px-10 lg:px-16 lg:py-36 xl:px-24"
+      className="w-full bg-background px-6 py-24 sm:px-10 lg:px-16 lg:py-32 xl:px-24"
     >
       <div className="mx-auto max-w-[1520px]">
-        <div className="grid grid-cols-1 gap-14 lg:grid-cols-[280px_1fr] lg:gap-16">
-          <div data-business-intro>
-            <span
-              data-business-fade
-              className="block text-xs font-medium tracking-[0.25em] text-subtext"
-            >
-              OUR SOLUTIONS
-            </span>
-            <h2
-              data-business-fade
-              className="mt-6 text-2xl font-medium leading-[1.7] text-foreground sm:text-3xl"
-            >
-              事業内容
-            </h2>
-            <p
-              data-business-fade
-              className="mt-6 text-sm font-normal leading-loose text-subtext sm:text-base"
-            >
-              積み重ねてきた経験と確かな知見で
-              <br />
-              土地と建物に深く向き合い、価値ある選択と創造を支えます。
-            </p>
-          </div>
+        <div data-business-intro className="max-w-2xl">
+          <span
+            data-business-fade
+            className="block text-xs font-medium tracking-[0.25em] text-subtext"
+          >
+            OUR BUSINESS
+          </span>
+          <h2
+            data-business-fade
+            className="mt-6 text-2xl font-medium leading-[1.6] text-foreground sm:text-3xl lg:text-[2.4rem]"
+          >
+            不動産と建築を、
+            <br />
+            一社でつなぐ。
+          </h2>
+          <p
+            data-business-fade
+            className="mt-6 text-sm font-normal leading-loose text-subtext sm:text-base"
+          >
+            仲介で終わらせず、リフォームで価値を高め、管理まで。事業を分けずに一気通貫で担うからこそ、土地と建物の可能性を最大限に引き出せます。
+          </p>
+        </div>
 
-          <div className="grid grid-cols-1 gap-16 sm:grid-cols-2 lg:gap-14">
-            {DIVISIONS.map((division) => (
-              <div key={division.index} data-business-card>
-                <div
-                  data-business-image
-                  className="relative aspect-[4/3] w-full overflow-hidden bg-[#161513]"
-                >
-                  <Image
-                    src={division.image}
-                    alt={`${division.title}のイメージ`}
-                    fill
-                    sizes="(min-width: 1024px) 32vw, 100vw"
-                    className={`object-cover ${division.imagePosition}`}
-                  />
-                </div>
+        <div className="mt-16 flex flex-col gap-20 lg:mt-24 lg:gap-28">
+          {DIVISIONS.map((division, i) => (
+            <div
+              key={division.index}
+              data-business-row
+              className={`grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16 ${
+                i % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""
+              }`}
+            >
+              <div
+                data-business-image
+                className="media relative aspect-[4/3] w-full overflow-hidden bg-[#161513] lg:aspect-[5/4]"
+              >
+                <Image
+                  src={division.image}
+                  alt={`${division.title}のイメージ`}
+                  fill
+                  sizes="(min-width: 1024px) 48vw, 100vw"
+                  className={`object-cover ${division.imagePosition}`}
+                />
+                <span className="absolute left-6 top-6 text-[11px] font-medium tracking-[0.3em] text-white/85">
+                  {division.en}
+                </span>
+              </div>
 
+              <div className="lg:px-4">
                 <span
                   data-business-text
-                  className="mt-8 block text-xs font-medium tracking-[0.25em] text-subtext"
+                  className="block text-xs font-medium tracking-[0.25em] text-subtext"
                 >
-                  {division.index}
+                  {division.index}　{division.lead}
                 </span>
-                <h3 data-business-text className="mt-3">
+                <h3 data-business-text className="mt-4">
                   <Link
                     href={division.href}
-                    className="inline-flex items-center gap-2 text-xl font-medium text-foreground transition-opacity hover:opacity-60 sm:text-2xl"
+                    className="inline-flex items-center gap-2 text-2xl font-medium text-foreground transition-opacity hover:opacity-60 sm:text-3xl"
                   >
                     {division.title}
-                    <span aria-hidden className="text-base sm:text-lg">
+                    <span aria-hidden className="text-lg sm:text-xl">
                       →
                     </span>
                   </Link>
                 </h3>
                 <p
                   data-business-text
-                  className="mt-4 max-w-md text-sm font-normal leading-loose text-subtext sm:text-base"
+                  className="mt-5 max-w-md text-sm font-normal leading-loose text-subtext sm:text-base"
                 >
                   {division.description}
                 </p>
+
+                <ul data-business-text className="mt-7 space-y-3">
+                  {division.points.map((point) => (
+                    <li
+                      key={point}
+                      className="flex gap-3 text-sm font-normal leading-relaxed text-foreground/80"
+                    >
+                      <span
+                        aria-hidden
+                        className="mt-2.5 inline-block h-px w-4 shrink-0 bg-foreground/40"
+                      />
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

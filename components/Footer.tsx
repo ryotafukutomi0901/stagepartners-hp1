@@ -1,10 +1,13 @@
-// "#company" のようなアンカーだけのhrefは、トップページ以外にいる時にクリックしても
-// 遷移できないため、"/#company" のようにパスを明示する。
+import Image from "next/image";
+import Link from "next/link";
+
+// "#news" のようなアンカーだけのhrefは、トップページ以外にいる時にクリックしても
+// 遷移できないため、"/#news" のようにパスを明示する。
 const FOOTER_LINKS = [
-  { label: "私たちについて", href: "/#company" },
+  { label: "TOP", href: "/" },
   { label: "事業内容", href: "/#business" },
   { label: "会社概要", href: "/company" },
-  { label: "採用情報", href: "/recruit" },
+  { label: "お知らせ", href: "/#news" },
   { label: "お問い合わせ", href: "/#contact" },
 ];
 
@@ -18,20 +21,26 @@ export default function Footer() {
   return (
     <footer className="w-full border-t border-border bg-background px-6 py-16 sm:px-10 lg:px-16 xl:px-24">
       <div className="mx-auto flex max-w-[1520px] flex-col gap-10 sm:flex-row sm:items-start sm:justify-between">
-        <span className="text-sm font-medium tracking-[0.2em] text-foreground">
-          STAGE PARTNERS
-        </span>
+        <Link href="/" aria-label="STAGE PARTNERS トップへ">
+          <Image
+            src="/logo-mono-black.png"
+            alt="STAGE PARTNERS"
+            width={400}
+            height={97}
+            className="h-8 w-auto"
+          />
+        </Link>
 
         <nav aria-label="フッターナビゲーション" className="overflow-x-auto">
-          <ul className="flex flex-nowrap gap-x-3 gap-y-3 sm:flex-wrap sm:gap-x-10">
+          <ul className="flex flex-nowrap gap-x-6 gap-y-3 sm:flex-wrap sm:gap-x-10">
             {FOOTER_LINKS.map((link) => (
               <li key={link.label}>
-                <a
+                <Link
                   href={link.href}
                   className="whitespace-nowrap text-xs font-normal tracking-[0.1em] text-subtext transition-colors hover:text-foreground"
                 >
                   {link.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
@@ -44,7 +53,7 @@ export default function Footer() {
         </p>
 
         <nav aria-label="法的情報" className="overflow-x-auto">
-          <ul className="flex flex-nowrap gap-x-3 gap-y-2 sm:flex-wrap sm:gap-x-8">
+          <ul className="flex flex-nowrap gap-x-4 gap-y-2 sm:flex-wrap sm:gap-x-8">
             {LEGAL_LINKS.map((link) => (
               <li key={link.label}>
                 <a

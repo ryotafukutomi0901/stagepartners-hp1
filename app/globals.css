@@ -3,10 +3,13 @@
 :root {
   --background: #ffffff;
   --foreground: #111111;
-  --subtext: #666666;
-  --border-color: #e5e5e5;
-  --accent: #000000;
-  --contact-bg: #f7f7f5;
+  --subtext: #6b6b6b;
+  --border-color: #e6e6e6;
+  --accent: #111111;
+  --surface: #f5f4f2;
+  --contact-bg: #111111;
+  /* ブランドオレンジはロゴ/favicon等のごく一部でのみ使用し、レイアウトはモノクロで統一する */
+  --brand: #c1461f;
 }
 
 @theme inline {
@@ -15,7 +18,9 @@
   --color-subtext: var(--subtext);
   --color-border: var(--border-color);
   --color-accent: var(--accent);
+  --color-surface: var(--surface);
   --color-contact: var(--contact-bg);
+  --color-brand: var(--brand);
   --font-sans: var(--font-shippori-mincho), serif;
 }
 
@@ -33,4 +38,57 @@ body {
 
 html {
   scroll-behavior: smooth;
+  /* sticky/absoluteヘッダーにアンカー先が隠れないようにする */
+  scroll-padding-top: 6rem;
+}
+
+/*
+ * モノクロ + ホバー彩色。
+ * 参考: sunpladining.com — 画像は既定でグレースケール、カーソルを合わせると
+ * ゆっくりカラーに戻りつつ僅かにズームする。
+ * 画像を包む要素に .media、その中の <img>(next/imageの出力)に効かせる。
+ */
+.media {
+  overflow: hidden;
+}
+
+.media img {
+  filter: grayscale(100%) contrast(1.02) brightness(0.98);
+  transform: scale(1.001);
+  transition:
+    filter 0.9s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 1.2s cubic-bezier(0.2, 0.7, 0.2, 1);
+  will-change: filter, transform;
+}
+
+.media:hover img,
+.media:focus-within img {
+  filter: grayscale(0%) contrast(1) brightness(1);
+  transform: scale(1.06);
+}
+
+/* ヒーロー等、背景として敷く画像は常時グレースケール(ホバー彩色はしない) */
+.media-static img {
+  filter: grayscale(100%) contrast(1.05) brightness(0.85);
+}
+
+/*
+ * タッチデバイスはホバーが無い。モノクロ基調を全面で保つため、既定のグレースケールを
+ * 維持し、ホバー時のズームだけ無効化する(タップでズームが固定されるのを防ぐ)。
+ */
+@media (hover: none) {
+  .media img,
+  .media:hover img,
+  .media:focus-within img {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .media img,
+  .media:hover img,
+  .media:focus-within img {
+    transform: none;
+    transition: filter 0.4s ease;
+  }
 }

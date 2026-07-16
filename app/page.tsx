@@ -1,8 +1,12 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import Proclaim from "@/components/Proclaim";
-import Company from "@/components/Company";
+import Challenges from "@/components/Challenges";
 import Business from "@/components/Business";
+import Strengths from "@/components/Strengths";
+import Works from "@/components/Works";
+import News from "@/components/News";
+import Company from "@/components/Company";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 
@@ -13,8 +17,12 @@ export default function Home() {
       <main className="flex flex-1 flex-col">
         <Hero />
         <Proclaim />
-        <Company />
+        <Challenges />
         <Business />
+        <Strengths />
+        <Works />
+        <News />
+        <Company />
         <Contact />
       </main>
       <Footer />
