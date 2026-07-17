@@ -1,11 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useScopedGsap, gsap } from "@/hooks/useGsap";
 import { scrollTriggerDefaults } from "@/lib/animations";
 
-// 会社情報サマリー。正式な会社概要ページ(/company)へ誘導する。
+// 会社概要ページ(/company)本体のコンテンツ。
 // 数値・許認可番号は正式決定まで仮の値。決まり次第差し替える。
 const PROFILE = [
   { label: "会社名", value: "株式会社STAGE PARTNERS" },
@@ -107,15 +106,6 @@ export default function Company() {
               </div>
             ))}
           </dl>
-
-          <Link
-            data-company-text
-            href="/company"
-            className="mt-10 inline-flex items-center gap-3 text-xs font-medium tracking-[0.2em] text-foreground transition-opacity hover:opacity-60"
-          >
-            会社概要を詳しく見る
-            <span aria-hidden className="inline-block h-px w-9 bg-foreground" />
-          </Link>
         </div>
       </div>
     </section>

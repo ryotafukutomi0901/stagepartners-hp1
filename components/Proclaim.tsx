@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useScopedGsap, gsap } from "@/hooks/useGsap";
 import { scrollTriggerDefaults } from "@/lib/animations";
 
@@ -90,14 +91,23 @@ export default function Proclaim() {
             ))}
           </h2>
 
-          <a
-            data-proclaim-sub
-            href="#business"
-            className="mt-12 inline-flex items-center gap-4 text-xs font-medium tracking-[0.2em] text-foreground transition-opacity hover:opacity-60"
-          >
-            事業内容を見る
-            <span aria-hidden className="inline-block h-px w-9 bg-foreground" />
-          </a>
+          <div data-proclaim-sub className="mt-12 flex flex-wrap items-center gap-x-10 gap-y-4">
+            <a
+              href="#business"
+              className="inline-flex items-center gap-4 text-xs font-medium tracking-[0.2em] text-foreground transition-opacity hover:opacity-60"
+            >
+              事業内容を見る
+              <span aria-hidden className="inline-block h-px w-9 bg-foreground" />
+            </a>
+
+            <Link
+              href="/company"
+              className="inline-flex items-center gap-4 text-xs font-medium tracking-[0.2em] text-foreground transition-opacity hover:opacity-60"
+            >
+              私たちについて
+              <span aria-hidden className="inline-block h-px w-9 bg-foreground" />
+            </Link>
+          </div>
         </div>
 
         <div
