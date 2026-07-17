@@ -77,11 +77,10 @@ export default function Proclaim() {
                   <span key={line} className="block overflow-hidden">
                     <span
                       data-proclaim-line
-                      className={`block ${
-                        i === 1
+                      className={`block ${i === 1
                           ? "text-2xl font-medium leading-[1.7] text-foreground sm:text-3xl"
                           : "text-sm font-normal leading-loose text-subtext sm:text-base"
-                      }`}
+                        }`}
                     >
                       {line}
                     </span>
@@ -91,21 +90,13 @@ export default function Proclaim() {
             ))}
           </h2>
 
-          <div data-proclaim-sub className="mt-12 flex flex-wrap items-center gap-x-10 gap-y-4">
-            <a
-              href="#business"
-              className="inline-flex items-center gap-4 text-xs font-medium tracking-[0.2em] text-foreground transition-opacity hover:opacity-60"
-            >
-              事業内容を見る
-              <span aria-hidden className="inline-block h-px w-9 bg-foreground" />
-            </a>
-
+          <div data-proclaim-sub className="mt-12">
             <Link
               href="/company"
-              className="inline-flex items-center gap-4 text-xs font-medium tracking-[0.2em] text-foreground transition-opacity hover:opacity-60"
+              className="inline-flex items-center gap-3 bg-foreground px-9 py-4 text-xs font-medium tracking-[0.2em] text-background transition-opacity hover:opacity-80"
             >
               私たちについて
-              <span aria-hidden className="inline-block h-px w-9 bg-foreground" />
+              <span aria-hidden>→</span>
             </Link>
           </div>
         </div>

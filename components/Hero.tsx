@@ -8,7 +8,7 @@ export default function Hero() {
   // Heroはページ最上部で読み込み直後から必ず視界に入るため、ScrollTriggerで
   // スクロールを待つのではなく、マウント直後に一度だけ再生する入場アニメーションにしている。
   // ここが第一印象(離脱率)を左右するため、他セクションより強めの演出にしてある。
-  const sectionRef = useScopedGsap<HTMLElement>(() => {
+  const sectionRef = useScopedGsap<HTMLElement>(({ scope }) => {
     const split = SplitText.create("[data-hero-line]", {
       type: "lines",
       mask: "lines",
@@ -65,7 +65,7 @@ export default function Hero() {
       yPercent: 10,
       ease: "none",
       scrollTrigger: {
-        trigger: sectionRef.current,
+        trigger: scope.current,
         start: "top top",
         end: "bottom top",
         scrub: true,

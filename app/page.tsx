@@ -12,7 +12,7 @@ import Footer from "@/components/Footer";
 export default function Home() {
   return (
     <>
-      <Header />
+      <Header transparent />
       <main className="flex flex-1 flex-col">
         <Hero />
         <Proclaim />

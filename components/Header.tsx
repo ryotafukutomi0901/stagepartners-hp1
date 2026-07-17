@@ -50,13 +50,27 @@ const NAV_ITEMS: NavItem[] = [
   },
 ];
 
-export default function Header() {
+type HeaderProps = {
+  // ヒーローに濃い背景画像がある(トップページの)場合だけ、最上部を透明にして
+  // スクロールで濃い黒へふわっと変化させる。それ以外のページは背景が白いため、
+  // 最初から濃い背景で固定し、白文字のヘッダーが見えなくなるのを防ぐ。
+  transparent?: boolean;
+};
+
+export default function Header({ transparent = false }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openMobile, setOpenMobile] = useState<string | null>(null);
 
-  // headerは position: absolute で最上部に重ねる。ヒーローの文字と重ならず、
-  // スクロール時に背景を濃い黒へふわっと変化させる。
   const headerRef = useScopedGsap<HTMLElement>(({ scope }) => {
+    if (!transparent) {
+      gsap.set(scope.current, {
+        backgroundColor: "rgba(17,17,17,0.96)",
+        borderBottomColor: "rgba(255,255,255,0.08)",
+        backdropFilter: "blur(12px)",
+      });
+      return;
+    }
+
     gsap.set(scope.current, {
       backgroundColor: "rgba(17,17,17,0)",
       borderBottomColor: "rgba(255,255,255,0)",
@@ -69,7 +83,7 @@ export default function Header() {
       ease: "none",
       scrollTrigger: { start: 0, end: 120, scrub: 0.3 },
     });
-  }, []);
+  }, [transparent]);
 
   return (
     <header
