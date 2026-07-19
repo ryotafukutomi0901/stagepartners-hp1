@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useScopedGsap, gsap } from "@/hooks/useGsap";
 
 // "#news" のようなアンカーだけのhrefは、トップページ以外(会社概要・採用情報など)に
@@ -60,6 +61,16 @@ type HeaderProps = {
 export default function Header({ transparent = false }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openMobile, setOpenMobile] = useState<string | null>(null);
+  const pathname = usePathname();
+
+  // ロゴ・TOPは href="/" のため、すでにトップページにいる場合は Next.js が
+  // 何も遷移せず画面も動かない。その時だけ手動で最上部へスクロールさせる。
+  const scrollTopIfHome = (e: React.MouseEvent) => {
+    if (pathname === "/") {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
 
   const headerRef = useScopedGsap<HTMLElement>(({ scope }) => {
     if (!transparent) {
@@ -92,7 +103,12 @@ export default function Header({ transparent = false }: HeaderProps) {
       className="fixed top-0 left-0 z-50 w-full border-b border-transparent"
     >
       <div className="mx-auto flex max-w-[1520px] items-center justify-between px-6 py-4 sm:px-10 lg:px-16">
-        <Link href="/" aria-label="STAGE PARTNERS トップへ" className="shrink-0">
+        <Link
+          href="/"
+          aria-label="STAGE PARTNERS トップへ"
+          className="shrink-0"
+          onClick={scrollTopIfHome}
+        >
           <Image
             src="/logo-mono-white.png"
             alt="STAGE PARTNERS"
@@ -111,6 +127,7 @@ export default function Header({ transparent = false }: HeaderProps) {
             <div key={item.label} className="group relative">
               <Link
                 href={item.href}
+                onClick={item.href === "/" ? scrollTopIfHome : undefined}
                 className="inline-flex items-center gap-1.5 py-6 text-xs font-normal tracking-[0.12em] text-white/80 transition-colors hover:text-white"
               >
                 {item.label}
@@ -174,7 +191,10 @@ export default function Header({ transparent = false }: HeaderProps) {
               <div className="flex items-center justify-between">
                 <Link
                   href={item.href}
-                  onClick={() => setIsMenuOpen(false)}
+                  onClick={(e) => {
+                    if (item.href === "/") scrollTopIfHome(e);
+                    setIsMenuOpen(false);
+                  }}
                   className="block flex-1 py-4 text-sm font-normal tracking-[0.08em] text-white/85"
                 >
                   {item.label}

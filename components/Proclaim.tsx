@@ -14,39 +14,66 @@ const PARAGRAPHS = [
 
 export default function Proclaim() {
   const sectionRef = useScopedGsap<HTMLElement>(({ scope }) => {
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: scope.current,
-        ...scrollTriggerDefaults,
-      },
-    });
+    // レイアウトが左右2カラム(lg以上)か縦積み(モバイル)かで、
+    // 視覚的な並び順に合わせて発火順を変える。
+    // - デスクトップ: 画像が横に並ぶので、画像リビール → テキストの順
+    // - モバイル: 文章が画像より上に来るので、テキスト → 画像リビールの順
+    const mm = gsap.matchMedia();
 
-    tl.fromTo(
-      "[data-proclaim-image-wrap]",
-      { clipPath: "inset(0% 100% 0% 0%)" },
-      { clipPath: "inset(0% 0% 0% 0%)", duration: 1.4, ease: "power4.inOut" },
-    )
-      .from(
-        "[data-proclaim-image]",
-        { scale: 1.22, duration: 2, ease: "power2.out" },
-        "<",
-      )
-      .from(
-        "[data-proclaim-line]",
-        {
-          yPercent: 115,
-          duration: 1.8,
-          ease: "expo.out",
-          stagger: 0.12,
-        },
-        "-=1.1",
-      )
-      .from(
-        "[data-proclaim-sub]",
-        { opacity: 0, y: 24, duration: 0.9, ease: "power3.out" },
-        "-=0.5",
-      )
-      .from("[data-proclaim-meta]", { opacity: 0, duration: 1 }, "-=0.6");
+    const imageReveal = (tl: gsap.core.Timeline, position?: gsap.Position) =>
+      tl
+        .fromTo(
+          "[data-proclaim-image-wrap]",
+          { clipPath: "inset(0% 100% 0% 0%)" },
+          {
+            clipPath: "inset(0% 0% 0% 0%)",
+            duration: 1.4,
+            ease: "power4.inOut",
+          },
+          position,
+        )
+        .from(
+          "[data-proclaim-image]",
+          { scale: 1.22, duration: 2, ease: "power2.out" },
+          "<",
+        );
+
+    const textReveal = (tl: gsap.core.Timeline, position?: gsap.Position) =>
+      tl
+        .from(
+          "[data-proclaim-line]",
+          { yPercent: 115, duration: 1.8, ease: "expo.out", stagger: 0.12 },
+          position,
+        )
+        .from(
+          "[data-proclaim-sub]",
+          { opacity: 0, y: 24, duration: 0.9, ease: "power3.out" },
+          "-=0.5",
+        );
+
+    mm.add(
+      { isDesktop: "(min-width: 1024px)", isMobile: "(max-width: 1023px)" },
+      (context) => {
+        const isDesktop = context.conditions?.isDesktop ?? false;
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: scope.current,
+            ...scrollTriggerDefaults,
+          },
+        });
+
+        if (isDesktop) {
+          imageReveal(tl);
+          textReveal(tl, "-=1.1");
+          tl.from("[data-proclaim-meta]", { opacity: 0, duration: 1 }, "-=0.6");
+        } else {
+          textReveal(tl);
+          imageReveal(tl, "-=0.3");
+          tl.from("[data-proclaim-meta]", { opacity: 0, duration: 1 }, "-=0.8");
+        }
+      },
+    );
 
     gsap.to("[data-proclaim-parallax]", {
       yPercent: 8,
