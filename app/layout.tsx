@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Shippori_Mincho } from "next/font/google";
+import PageTransition from "@/components/PageTransition";
 import "./globals.css";
 
 const shippori = Shippori_Mincho({
@@ -34,6 +35,10 @@ export default function RootLayout({
   return (
     <html lang="ja" className={shippori.variable}>
       <body className="min-h-full flex flex-col bg-background text-foreground">
+        <noscript>
+          <style>{`[data-page-transition]{display:none!important}`}</style>
+        </noscript>
+        <PageTransition />
         {children}
       </body>
     </html>
