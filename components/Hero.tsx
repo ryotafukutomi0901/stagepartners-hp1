@@ -1,20 +1,26 @@
 "use client";
 
+import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useScopedGsap, gsap, SplitText } from "@/hooks/useGsap";
+import { onCurtainOpen } from "@/lib/curtain";
 
 export default function Hero() {
   // Heroはページ最上部で読み込み直後から必ず視界に入るため、ScrollTriggerで
   // スクロールを待つのではなく、マウント直後に一度だけ再生する入場アニメーションにしている。
   // ここが第一印象(離脱率)を左右するため、他セクションより強めの演出にしてある。
+  //
+  // ただしマウント自体はPageTransitionの幕(ローディング演出)がまだ画面を
+  // 覆っている間に起きるため、即再生すると幕が開く頃には演出が終わっている。
+  // 幕が開き始める合図(onCurtainOpen)を待ってから再生する。
   const sectionRef = useScopedGsap<HTMLElement>(({ scope }) => {
     const split = SplitText.create("[data-hero-line]", {
       type: "lines",
       mask: "lines",
     });
 
-    const tl = gsap.timeline({ delay: 0.15 });
+    const tl = gsap.timeline({ id: "hero-intro", paused: true, delay: 0.15 });
 
     tl.from("[data-hero-image]", {
       scale: 1.2,
@@ -72,6 +78,8 @@ export default function Hero() {
       },
     });
   }, []);
+
+  useEffect(() => onCurtainOpen(() => gsap.getById("hero-intro")?.play()), []);
 
   return (
     <section

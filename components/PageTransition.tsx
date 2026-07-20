@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { gsap } from "@/hooks/useGsap";
+import { notifyCurtainClosing, notifyCurtainOpen } from "@/lib/curtain";
 
 const EASE = "power4.inOut";
 
@@ -50,6 +51,7 @@ export default function PageTransition() {
 
   const close = (onComplete?: () => void) => {
     if (!overlayRef.current) return;
+    notifyCurtainClosing();
     gsap.set(overlayRef.current, { display: "flex", pointerEvents: "auto" });
     showMark();
     gsap.fromTo(
@@ -62,6 +64,10 @@ export default function PageTransition() {
   const open = () => {
     if (!overlayRef.current) return;
     hideMark();
+    // 幕が開き始める合図。Hero等の入場アニメーションはこれを待って再生する
+    // ことで、幕の下で終わってしまったり反対に開いた後だけ動いて見えたり
+    // しないようにする。
+    notifyCurtainOpen();
     gsap.to(overlayRef.current, {
       clipPath: HIDDEN,
       duration: 1,
