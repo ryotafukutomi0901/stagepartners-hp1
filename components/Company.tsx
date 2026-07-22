@@ -13,7 +13,7 @@ const PROFILE = [
   { label: "所在地", value: "〒410-0055　静岡県沼津市高島本町16-16 高島本町ビル2F" },
   {
     label: "事業内容",
-    value: "不動産事業（仲介・管理・買取再販）／ 建設事業（リフォーム）",
+    value: "不動産ソリューション（仲介・管理・買取再販）／ 建設ソリューション（リフォーム）",
   },
   {
     label: "許認可",
@@ -97,10 +97,10 @@ export default function Company() {
                 <dd className="text-sm font-normal leading-relaxed text-foreground sm:text-base">
                   {Array.isArray(row.value)
                     ? row.value.map((line) => (
-                        <span key={line} className="block">
-                          {line}
-                        </span>
-                      ))
+                      <span key={line} className="block">
+                        {line}
+                      </span>
+                    ))
                     : row.value}
                 </dd>
               </div>
