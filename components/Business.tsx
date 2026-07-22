@@ -94,7 +94,7 @@ export default function Business() {
             data-business-fade
             className="block text-xs font-medium tracking-[0.25em] text-subtext"
           >
-            OUR BUSINESS
+            OUR SOLUTIONS
           </span>
           <h2
             data-business-fade
