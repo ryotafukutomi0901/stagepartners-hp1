@@ -14,40 +14,71 @@ const PARAGRAPHS = [
 
 export default function Proclaim() {
   const sectionRef = useScopedGsap<HTMLElement>(({ scope }) => {
-    // 画面サイズによらず発火順・タイミングを統一する
-    // (画像リビール → テキスト → メタ情報の順)。
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: scope.current,
-        ...scrollTriggerDefaults,
-      },
-    });
+    // レイアウト上の並び順(視覚的にどちらが先に見えるか)に合わせて発火順を変える。
+    // - デスクトップ(lg以上): 画像とテキストが横並び → 画像リビール → テキストの順
+    // - モバイル/タブレット: grid-cols-1でテキストが上・画像が下に積まれる
+    //   → テキストが先に見えるので、テキスト → 画像リビールの順
+    // タイミングの「間」自体は両者で揃え、順序だけを入れ替える。
+    const mm = gsap.matchMedia();
 
-    tl.fromTo(
-      "[data-proclaim-image-wrap]",
-      { clipPath: "inset(0% 100% 0% 0%)" },
-      {
-        clipPath: "inset(0% 0% 0% 0%)",
-        duration: 1.4,
-        ease: "power4.inOut",
+    // matchMedia().add()は「渡した条件のうち少なくとも1つが現在trueでないと
+    // コールバックが呼ばれない」仕様のため、isDesktopだけを渡すとモバイル/
+    // タブレット幅では条件が常にfalseになり、コールバック自体が発火しない
+    // (=アニメーションが一切登録されない)。isMobileも併せて渡し、
+    // どちらか一方が必ずtrueになるようにする。
+    mm.add(
+      { isDesktop: "(min-width: 1024px)", isMobile: "(max-width: 1023px)" },
+      (context) => {
+        const isDesktop = context.conditions?.isDesktop ?? false;
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: scope.current,
+            ...scrollTriggerDefaults,
+          },
+        });
+
+        const revealImage = (position?: gsap.Position) =>
+          tl
+            .fromTo(
+              "[data-proclaim-image-wrap]",
+              { clipPath: "inset(0% 100% 0% 0%)" },
+              {
+                clipPath: "inset(0% 0% 0% 0%)",
+                duration: 1.4,
+                ease: "power4.inOut",
+              },
+              position,
+            )
+            .from(
+              "[data-proclaim-image]",
+              { scale: 1.22, duration: 2, ease: "power2.out" },
+              "<",
+            );
+
+        const revealText = (position?: gsap.Position) =>
+          tl
+            .from(
+              "[data-proclaim-line]",
+              { yPercent: 115, duration: 1.8, ease: "expo.out", stagger: 0.12 },
+              position,
+            )
+            .from(
+              "[data-proclaim-sub]",
+              { opacity: 0, y: 24, duration: 0.9, ease: "power3.out" },
+              "-=0.5",
+            );
+
+        if (isDesktop) {
+          revealImage();
+          revealText("-=1.1");
+        } else {
+          revealText();
+          revealImage("-=1.1");
+        }
+        tl.from("[data-proclaim-meta]", { opacity: 0, duration: 1 }, "-=0.6");
       },
-    )
-      .from(
-        "[data-proclaim-image]",
-        { scale: 1.22, duration: 2, ease: "power2.out" },
-        "<",
-      )
-      .from(
-        "[data-proclaim-line]",
-        { yPercent: 115, duration: 1.8, ease: "expo.out", stagger: 0.12 },
-        "-=1.1",
-      )
-      .from(
-        "[data-proclaim-sub]",
-        { opacity: 0, y: 24, duration: 0.9, ease: "power3.out" },
-        "-=0.5",
-      )
-      .from("[data-proclaim-meta]", { opacity: 0, duration: 1 }, "-=0.6");
+    );
 
     gsap.to("[data-proclaim-parallax]", {
       yPercent: 8,
