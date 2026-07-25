@@ -110,7 +110,10 @@ export default function Proclaim() {
                     <span
                       data-proclaim-line
                       className={`block ${i === 1
-                          ? "text-2xl font-medium leading-[1.7] text-foreground sm:text-3xl"
+                          ? // lg以上は左右2カラムになり左カラムが狭くなるため、
+                            // 「その場所で挑戦する人たちだ。」が折り返して3行になっていた。
+                            // PCサイズのみ画面幅に応じて縮め、常に2行に収める。
+                            "text-2xl font-medium leading-[1.7] text-foreground sm:text-3xl lg:text-[clamp(1.25rem,2vw,1.875rem)]"
                           : "text-sm font-normal leading-loose text-subtext sm:text-base"
                         }`}
                     >
