@@ -26,23 +26,8 @@ const NAV_ITEMS: NavItem[] = [
       { label: "建設ソリューション（リフォーム）", href: "/construction" },
     ],
   },
-  {
-    label: "会社概要",
-    href: "/company",
-    children: [
-      { label: "会社情報", href: "/company" },
-      { label: "代表メッセージ", href: "/company#message" },
-      { label: "アクセス", href: "/company#access" },
-    ],
-  },
-  {
-    label: "お知らせ",
-    href: "/#news",
-    children: [
-      { label: "新着情報", href: "/#news" },
-      { label: "プレスリリース", href: "/#news" },
-    ],
-  },
+  { label: "会社概要", href: "/company" },
+  { label: "お知らせ", href: "/news" },
   { label: "お問い合わせ", href: "/#contact", cta: true },
 ];
 

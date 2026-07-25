@@ -6,8 +6,9 @@ import Link from "next/link";
 const FOOTER_LINKS = [
   { label: "TOP", href: "/" },
   { label: "事業内容", href: "/#business" },
+  { label: "施工実績", href: "/works" },
   { label: "会社概要", href: "/company" },
-  { label: "お知らせ", href: "/#news" },
+  { label: "お知らせ", href: "/news" },
   { label: "お問い合わせ", href: "/#contact" },
 ];
 

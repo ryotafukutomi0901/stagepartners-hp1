@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useScopedGsap, gsap } from "@/hooks/useGsap";
 import { scrollTriggerDefaults } from "@/lib/animations";
 
@@ -50,6 +51,19 @@ export default function Works() {
       duration: 0.9,
       ease: "power2.out",
       stagger: 0.12,
+      scrollTrigger: {
+        trigger: "[data-works-grid]",
+        ...scrollTriggerDefaults,
+      },
+    });
+
+    // ボタン単体は高さが小さくend("bottom 20%")をすぐ通過してreverseが走り、
+    // 閲覧中に消えてしまうため、グリッドを基準に発火させる。
+    gsap.from("[data-works-cta]", {
+      opacity: 0,
+      y: 20,
+      duration: 0.9,
+      ease: "power2.out",
       scrollTrigger: {
         trigger: "[data-works-grid]",
         ...scrollTriggerDefaults,
@@ -115,6 +129,16 @@ export default function Works() {
               </p>
             </article>
           ))}
+        </div>
+
+        <div data-works-cta className="mt-14 flex justify-center lg:mt-16">
+          <Link
+            href="/works"
+            className="inline-flex items-center gap-3 bg-foreground px-8 py-4 text-xs font-medium tracking-[0.2em] text-background transition-opacity hover:opacity-80"
+          >
+            実績一覧を見る
+            <span aria-hidden>→</span>
+          </Link>
         </div>
       </div>
     </section>

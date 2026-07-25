@@ -11,24 +11,27 @@ const NEWS = [
     date: "2026.07.01",
     category: "お知らせ",
     title: "夏季休業期間のお知らせ",
-    href: "/#news",
+    href: "/news",
   },
   {
     date: "2026.06.15",
     category: "施工実績",
     title: "賃貸マンションのリノベーション事例を公開しました",
-    href: "/#news",
+    href: "/news",
   },
   {
     date: "2026.05.28",
     category: "Instagram",
     title: "現場の様子を更新しました",
-    href: "/#news",
+    href: "/news",
   },
 ];
 
 export default function News() {
-  const sectionRef = useScopedGsap<HTMLElement>(() => {
+  const sectionRef = useScopedGsap<HTMLElement>(({ scope }) => {
+    // 左カラム([data-news-head])は高さが小さく、end("bottom 20%")を
+    // すぐ通過してreverseが走り、閲覧中にボタンが消えてしまう。
+    // セクション全体をトリガーにして、表示中は消えないようにする。
     gsap.from("[data-news-fade]", {
       opacity: 0,
       y: 24,
@@ -36,7 +39,7 @@ export default function News() {
       ease: "power2.out",
       stagger: 0.1,
       scrollTrigger: {
-        trigger: "[data-news-head]",
+        trigger: scope.current,
         ...scrollTriggerDefaults,
       },
     });
@@ -74,14 +77,17 @@ export default function News() {
           >
             お知らせ
           </h2>
-          <Link
-            data-news-fade
-            href="/#news"
-            className="mt-8 inline-flex items-center gap-3 text-xs font-medium tracking-[0.2em] text-foreground transition-opacity hover:opacity-60"
-          >
-            一覧を見る
-            <span aria-hidden className="inline-block h-px w-9 bg-foreground" />
-          </Link>
+          {/* gsapでopacityをアニメーションする要素にTailwindのtransition-opacityが
+              同居すると競合して表示されないため、ラッパー側をアニメーション対象にする。 */}
+          <div data-news-fade className="mt-8">
+            <Link
+              href="/news"
+              className="inline-flex items-center gap-3 bg-foreground px-8 py-4 text-xs font-medium tracking-[0.2em] text-background transition-opacity hover:opacity-80"
+            >
+              お知らせ一覧を見る
+              <span aria-hidden>→</span>
+            </Link>
+          </div>
         </div>
 
         <ul data-news-list className="flex flex-col">
