@@ -12,6 +12,8 @@ type NavItem = {
   label: string;
   href: string;
   children?: { label: string; href: string }[];
+  // ドロップダウン展開せず、白背景ボタンとして強調表示する項目(現状は「お問い合わせ」のみ)。
+  cta?: boolean;
 };
 
 const NAV_ITEMS: NavItem[] = [
@@ -41,14 +43,7 @@ const NAV_ITEMS: NavItem[] = [
       { label: "プレスリリース", href: "/#news" },
     ],
   },
-  {
-    label: "お問い合わせ",
-    href: "/#contact",
-    children: [
-      { label: "お問い合わせフォーム", href: "/#contact" },
-      { label: "資料請求", href: "/#contact" },
-    ],
-  },
+  { label: "お問い合わせ", href: "/#contact", cta: true },
 ];
 
 type HeaderProps = {
@@ -123,40 +118,51 @@ export default function Header({ transparent = false }: HeaderProps) {
           className="hidden items-center gap-8 lg:flex"
           aria-label="メインナビゲーション"
         >
-          {NAV_ITEMS.map((item) => (
-            <div key={item.label} className="group relative">
+          {NAV_ITEMS.map((item) =>
+            item.cta ? (
               <Link
+                key={item.label}
                 href={item.href}
-                onClick={item.href === "/" ? scrollTopIfHome : undefined}
-                className="inline-flex items-center gap-1.5 py-6 text-xs font-normal tracking-[0.12em] text-white/80 transition-colors hover:text-white"
+                className="inline-flex items-center gap-2 bg-white px-6 py-2.5 text-xs font-medium tracking-[0.12em] text-[#111111] transition-opacity hover:opacity-80"
               >
                 {item.label}
-                {item.children && (
-                  <span
-                    aria-hidden
-                    className="mt-px inline-block h-1 w-1 rotate-45 border-b border-r border-white/50 transition-colors group-hover:border-white"
-                  />
-                )}
+                <span aria-hidden>→</span>
               </Link>
+            ) : (
+              <div key={item.label} className="group relative">
+                <Link
+                  href={item.href}
+                  onClick={item.href === "/" ? scrollTopIfHome : undefined}
+                  className="inline-flex items-center gap-1.5 py-6 text-xs font-normal tracking-[0.12em] text-white/80 transition-colors hover:text-white"
+                >
+                  {item.label}
+                  {item.children && (
+                    <span
+                      aria-hidden
+                      className="mt-px inline-block h-1 w-1 rotate-45 border-b border-r border-white/50 transition-colors group-hover:border-white"
+                    />
+                  )}
+                </Link>
 
-              {item.children && (
-                <div className="invisible absolute left-1/2 top-full z-50 -translate-x-1/2 pt-1 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
-                  <ul className="min-w-[220px] border border-white/10 bg-[#111111]/98 py-2 shadow-2xl backdrop-blur-md">
-                    {item.children.map((child) => (
-                      <li key={child.label}>
-                        <Link
-                          href={child.href}
-                          className="block whitespace-nowrap px-5 py-3 text-xs font-normal tracking-[0.08em] text-white/70 transition-colors hover:bg-white/5 hover:text-white"
-                        >
-                          {child.label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-          ))}
+                {item.children && (
+                  <div className="invisible absolute left-1/2 top-full z-50 -translate-x-1/2 pt-1 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                    <ul className="min-w-[220px] border border-white/10 bg-[#111111]/98 py-2 shadow-2xl backdrop-blur-md">
+                      {item.children.map((child) => (
+                        <li key={child.label}>
+                          <Link
+                            href={child.href}
+                            className="block whitespace-nowrap px-5 py-3 text-xs font-normal tracking-[0.08em] text-white/70 transition-colors hover:bg-white/5 hover:text-white"
+                          >
+                            {child.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            ),
+          )}
         </nav>
 
         <button
@@ -186,55 +192,68 @@ export default function Header({ transparent = false }: HeaderProps) {
         className={`overflow-hidden bg-[#111111]/98 backdrop-blur-md transition-[max-height,opacity] duration-500 ease-out lg:hidden ${isMenuOpen ? "max-h-[80vh] opacity-100" : "max-h-0 opacity-0"}`}
       >
         <ul className="flex flex-col border-t border-white/10 px-6 py-2 sm:px-10">
-          {NAV_ITEMS.map((item) => (
-            <li key={item.label} className="border-b border-white/5">
-              <div className="flex items-center justify-between">
+          {NAV_ITEMS.map((item) =>
+            item.cta ? (
+              <li key={item.label} className="py-4">
                 <Link
                   href={item.href}
-                  onClick={(e) => {
-                    if (item.href === "/") scrollTopIfHome(e);
-                    setIsMenuOpen(false);
-                  }}
-                  className="block flex-1 py-4 text-sm font-normal tracking-[0.08em] text-white/85"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="flex items-center justify-center gap-2 bg-white py-3.5 text-sm font-medium tracking-[0.08em] text-[#111111]"
                 >
                   {item.label}
+                  <span aria-hidden>→</span>
                 </Link>
-                {item.children && (
-                  <button
-                    type="button"
-                    aria-label={`${item.label}のサブメニューを開閉`}
-                    aria-expanded={openMobile === item.label}
-                    onClick={() =>
-                      setOpenMobile((v) => (v === item.label ? null : item.label))
-                    }
-                    className="flex h-11 w-11 items-center justify-center text-white/60"
+              </li>
+            ) : (
+              <li key={item.label} className="border-b border-white/5">
+                <div className="flex items-center justify-between">
+                  <Link
+                    href={item.href}
+                    onClick={(e) => {
+                      if (item.href === "/") scrollTopIfHome(e);
+                      setIsMenuOpen(false);
+                    }}
+                    className="block flex-1 py-4 text-sm font-normal tracking-[0.08em] text-white/85"
                   >
-                    <span
-                      className={`inline-block h-2 w-2 rotate-45 border-b border-r border-white/60 transition-transform duration-300 ${openMobile === item.label ? "-rotate-[135deg]" : ""}`}
-                    />
-                  </button>
-                )}
-              </div>
+                    {item.label}
+                  </Link>
+                  {item.children && (
+                    <button
+                      type="button"
+                      aria-label={`${item.label}のサブメニューを開閉`}
+                      aria-expanded={openMobile === item.label}
+                      onClick={() =>
+                        setOpenMobile((v) => (v === item.label ? null : item.label))
+                      }
+                      className="flex h-11 w-11 items-center justify-center text-white/60"
+                    >
+                      <span
+                        className={`inline-block h-2 w-2 rotate-45 border-b border-r border-white/60 transition-transform duration-300 ${openMobile === item.label ? "-rotate-[135deg]" : ""}`}
+                      />
+                    </button>
+                  )}
+                </div>
 
-              {item.children && (
-                <ul
-                  className={`overflow-hidden transition-[max-height,opacity] duration-300 ${openMobile === item.label ? "max-h-60 opacity-100" : "max-h-0 opacity-0"}`}
-                >
-                  {item.children.map((child) => (
-                    <li key={child.label}>
-                      <Link
-                        href={child.href}
-                        onClick={() => setIsMenuOpen(false)}
-                        className="block py-3 pl-4 text-xs font-normal tracking-[0.06em] text-white/60"
-                      >
-                        {child.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
-          ))}
+                {item.children && (
+                  <ul
+                    className={`overflow-hidden transition-[max-height,opacity] duration-300 ${openMobile === item.label ? "max-h-60 opacity-100" : "max-h-0 opacity-0"}`}
+                  >
+                    {item.children.map((child) => (
+                      <li key={child.label}>
+                        <Link
+                          href={child.href}
+                          onClick={() => setIsMenuOpen(false)}
+                          className="block py-3 pl-4 text-xs font-normal tracking-[0.06em] text-white/60"
+                        >
+                          {child.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ),
+          )}
         </ul>
       </nav>
     </header>
