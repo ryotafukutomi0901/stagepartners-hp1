@@ -13,8 +13,8 @@ const PARAGRAPHS = [
 ];
 
 const IMAGES = [
-  { src: "/proclaim-image-1.png", alt: "STAGE PARTNERSが手がける建物のエントランスから望む街並み" },
-  { src: "/proclaim-image-2.png", alt: "STAGE PARTNERSが手がける建物のラウンジから望む街並み" },
+  { src: "/proclaim-image-1.jpg", alt: "STAGE PARTNERSが手がける建物のエントランスから望む街並み" },
+  { src: "/proclaim-image-2.jpg", alt: "STAGE PARTNERSが手がける建物のラウンジから望む街並み" },
 ];
 
 export default function Proclaim() {

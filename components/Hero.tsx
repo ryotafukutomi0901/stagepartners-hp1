@@ -90,7 +90,7 @@ export default function Hero() {
       <div className="media-static absolute inset-0">
         <Image
           data-hero-image
-          src="/stagepartners-hero.png"
+          src="/stagepartners-hero.jpg"
           alt="STAGE PARTNERSが向き合う土地と建物"
           fill
           sizes="100vw"
