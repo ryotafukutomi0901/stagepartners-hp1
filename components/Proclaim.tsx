@@ -153,9 +153,11 @@ export default function Proclaim() {
                       data-proclaim-line
                       className={`block ${i === 1
                           ? // 他セクションのh2(text-2xl sm:text-3xl系)と揃えた強調サイズ。
-                            // lg以上も同じ30pxのまま伸ばさない: これ以上大きくすると
-                            // 左カラムの幅で「その場所で挑戦する人たちだ。」が折り返す。
-                            "text-2xl font-medium leading-[1.5] text-foreground sm:text-3xl"
+                            // lg(1024px)ちょうどは左カラムが最も狭くなり、そのまま30pxだと
+                            // 「その場所で挑戦する人たちだ。」が折り返して3行になる。
+                            // lgだけ一段引き締め、カラムに余裕が出るxl以降で30pxへ戻す
+                            // (vwクランプは幅によって不規則に伸縮するため使わない)。
+                            "text-2xl font-medium leading-[1.5] text-foreground sm:text-3xl lg:text-[1.5rem] xl:text-3xl"
                           : "text-sm font-normal leading-loose text-subtext sm:text-base"
                         }`}
                     >
