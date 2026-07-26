@@ -116,7 +116,7 @@ export default function Hero() {
           <span className="block overflow-hidden">
             <span
               data-hero-line
-              className="block text-[2.6rem] font-medium leading-[1.28] tracking-[0.02em] sm:text-6xl lg:text-[5rem]"
+              className="block text-[2.25rem] font-medium leading-[1.3] tracking-[0.02em] sm:text-[3.5rem] lg:text-[4.25rem]"
             >
               土地と建物に、
             </span>
@@ -124,7 +124,7 @@ export default function Hero() {
           <span className="block overflow-hidden">
             <span
               data-hero-line
-              className="block text-[2.6rem] font-medium leading-[1.28] tracking-[0.02em] sm:text-6xl lg:text-[5rem]"
+              className="block text-[2.25rem] font-medium leading-[1.3] tracking-[0.02em] sm:text-[3.5rem] lg:text-[4.25rem]"
             >
               次の価値を。
             </span>

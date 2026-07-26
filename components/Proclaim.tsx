@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useScopedGsap, gsap } from "@/hooks/useGsap";
+import { useScopedGsap, gsap, ScrollTrigger } from "@/hooks/useGsap";
 import { scrollTriggerDefaults } from "@/lib/animations";
 
 // 導入メッセージ: 地主さま・オーナーさまに向け、STAGE PARTNERSの役割を短く伝える。
@@ -10,6 +10,11 @@ const PARAGRAPHS = [
   ["不動産や建築を扱うということは、", "主役は私たちではない。"],
   ["主役は、", "その場所で挑戦する人たちだ。"],
   ["私たちは、その人たちが輝くための舞台を創る。"],
+];
+
+const IMAGES = [
+  { src: "/proclaim-image-1.png", alt: "STAGE PARTNERSが手がける建物のエントランスから望む街並み" },
+  { src: "/proclaim-image-2.png", alt: "STAGE PARTNERSが手がける建物のラウンジから望む街並み" },
 ];
 
 export default function Proclaim() {
@@ -90,6 +95,43 @@ export default function Proclaim() {
         scrub: true,
       },
     });
+
+    // 2枚の写真を自動で交互にクロスフェード。「01 ── 02」の表示中インジケーターと連動させる。
+    // OSの「視差効果を減らす」設定時は、切り替えずに1枚目を静止表示する。
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!reduceMotion) {
+      const images = gsap.utils.toArray<HTMLElement>("[data-proclaim-image]");
+      const dots = gsap.utils.toArray<HTMLElement>("[data-proclaim-dot]");
+
+      if (images.length === 2 && dots.length === 2) {
+        const crossfade = gsap.timeline({ repeat: -1, paused: true });
+        const HOLD = 4.5;
+        const FADE = 1.1;
+
+        crossfade
+          .to({}, { duration: HOLD })
+          .to(images[0], { opacity: 0, duration: FADE, ease: "power1.inOut" })
+          .to(images[1], { opacity: 1, duration: FADE, ease: "power1.inOut" }, "<")
+          .to(dots[0], { opacity: 0.4, duration: 0.5 }, "<")
+          .to(dots[1], { opacity: 1, duration: 0.5 }, "<")
+          .to({}, { duration: HOLD })
+          .to(images[1], { opacity: 0, duration: FADE, ease: "power1.inOut" })
+          .to(images[0], { opacity: 1, duration: FADE, ease: "power1.inOut" }, "<")
+          .to(dots[1], { opacity: 0.4, duration: 0.5 }, "<")
+          .to(dots[0], { opacity: 1, duration: 0.5 }, "<");
+
+        // 画面外にいる間は止めて無駄なCPU消費を避ける。
+        ScrollTrigger.create({
+          trigger: scope.current,
+          start: "top 80%",
+          end: "bottom 20%",
+          onEnter: () => crossfade.play(),
+          onEnterBack: () => crossfade.play(),
+          onLeave: () => crossfade.pause(),
+          onLeaveBack: () => crossfade.pause(),
+        });
+      }
+    }
   }, []);
 
   return (
@@ -110,10 +152,10 @@ export default function Proclaim() {
                     <span
                       data-proclaim-line
                       className={`block ${i === 1
-                          ? // lg以上は左右2カラムになり左カラムが狭くなるため、
-                            // 「その場所で挑戦する人たちだ。」が折り返して3行になっていた。
-                            // PCサイズのみ画面幅に応じて縮め、常に2行に収める。
-                            "text-2xl font-medium leading-[1.7] text-foreground sm:text-3xl lg:text-[clamp(1.25rem,2vw,1.875rem)]"
+                          ? // 他セクションのh2(text-2xl sm:text-3xl系)と揃えた強調サイズ。
+                            // lg以上も同じ30pxのまま伸ばさない: これ以上大きくすると
+                            // 左カラムの幅で「その場所で挑戦する人たちだ。」が折り返す。
+                            "text-2xl font-medium leading-[1.5] text-foreground sm:text-3xl"
                           : "text-sm font-normal leading-loose text-subtext sm:text-base"
                         }`}
                     >
@@ -144,23 +186,28 @@ export default function Proclaim() {
             data-proclaim-parallax
             className="absolute inset-x-0 -top-[10%] -bottom-[10%]"
           >
-            <Image
-              data-proclaim-image
-              src="/heroimage1.png"
-              alt="STAGE PARTNERSが向き合う街並みと建物"
-              fill
-              sizes="(min-width: 1024px) 58vw, 100vw"
-              className="object-cover object-[40%_center]"
-            />
+            {IMAGES.map((image, i) => (
+              <Image
+                key={image.src}
+                data-proclaim-image
+                src={image.src}
+                alt={image.alt}
+                fill
+                sizes="(min-width: 1024px) 58vw, 100vw"
+                className="object-cover object-center"
+                style={i === 0 ? undefined : { opacity: 0 }}
+                priority={i === 0}
+              />
+            ))}
           </div>
 
           <div
             data-proclaim-meta
             className="absolute bottom-7 left-7 flex items-center gap-3 text-[11px] font-normal tracking-[0.25em] text-white/85"
           >
-            <span>01</span>
+            <span data-proclaim-dot className="opacity-100">01</span>
             <span aria-hidden className="inline-block h-px w-9 bg-white/60" />
-            <span>02</span>
+            <span data-proclaim-dot className="opacity-40">02</span>
           </div>
         </div>
       </div>
