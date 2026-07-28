@@ -38,7 +38,10 @@ export default function Contact() {
     e.preventDefault();
     setStatus("sending");
 
-    const formData = new FormData(e.currentTarget);
+    // Reactはハンドラが返った直後にcurrentTargetをnullへ戻すため、awaitを挟むと
+    // 送信後には参照できない。同期のうちにform要素を掴んでおく。
+    const form = e.currentTarget;
+    const formData = new FormData(form);
     formData.append("access_key", WEB3FORMS_ACCESS_KEY);
     formData.append("subject", "STAGE PARTNERS｜サイトからのお問い合わせ");
 
@@ -51,7 +54,7 @@ export default function Contact() {
       const data = await res.json();
       if (data.success) {
         setStatus("success");
-        e.currentTarget.reset();
+        form.reset();
       } else {
         setStatus("error");
       }
