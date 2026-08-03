@@ -67,6 +67,18 @@ export default function Hero() {
     });
 
     // スクロールで背景画像を僅かにパララックスさせる
+    const slides = gsap.utils.toArray<HTMLElement>("[data-hero-slide]");
+    let slideTimer: number | undefined;
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches && slides.length > 1) {
+      let current = 0;
+      slideTimer = window.setInterval(() => {
+        const next = (current + 1) % slides.length;
+        gsap.fromTo(slides[next], { opacity: 0, scale: 1.08 }, { opacity: 1, scale: 1, duration: 1.4, ease: "power2.inOut" });
+        gsap.to(slides[current], { opacity: 0, duration: 1.4, ease: "power2.inOut" });
+        current = next;
+      }, 5600);
+    }
+
     gsap.to("[data-hero-image]", {
       yPercent: 10,
       ease: "none",
@@ -77,6 +89,10 @@ export default function Hero() {
         scrub: true,
       },
     });
+
+    return () => {
+      if (slideTimer) window.clearInterval(slideTimer);
+    };
   }, []);
 
   useEffect(() => onCurtainOpen(() => gsap.getById("hero-intro")?.play()), []);
@@ -84,24 +100,31 @@ export default function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="relative flex h-[100svh] min-h-[560px] w-full items-center overflow-hidden bg-[#0d0d0d]"
+      className="relative flex h-[100svh] min-h-[560px] w-full items-center overflow-hidden bg-[#102d40]"
     >
       {/* 全面に敷く背景画像(余白なし) */}
-      <div className="media-static absolute inset-0">
-        <Image
-          data-hero-image
-          src="/stagepartners-hero.jpg"
-          alt="STAGE PARTNERSが向き合う土地と建物"
-          fill
-          sizes="100vw"
-          priority
-          className="object-cover object-center"
-        />
+      <div data-hero-image className="absolute inset-0">
+        {[
+          { src: "/stagepartners-hero.jpg", position: "object-center" },
+          { src: "/constructimage1.jpg", position: "object-center" },
+          { src: "/real-estateimage1.png", position: "object-[60%_center]" },
+        ].map((slide, index) => (
+          <div key={slide.src} data-hero-slide className={`absolute inset-0 ${index === 0 ? "opacity-100" : "opacity-0"}`}>
+            <Image
+              src={slide.src}
+              alt={index === 0 ? "STAGE PARTNERSが向き合う沼津の土地と建物" : ""}
+              fill
+              sizes="100vw"
+              priority={index === 0}
+              className={`object-cover ${slide.position}`}
+            />
+          </div>
+        ))}
       </div>
       {/* 可読性のためのグラデーションオーバーレイ */}
       <div
         aria-hidden
-        className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/35 to-black/70"
+        className="absolute inset-0 bg-gradient-to-b from-[#102d40]/70 via-[#102d40]/38 to-[#102d40]/82"
       />
 
       <div className="relative z-10 mx-auto w-full max-w-[1520px] px-6 sm:px-10 lg:px-16">
@@ -109,7 +132,7 @@ export default function Hero() {
           data-hero-eyebrow
           className="text-[10px] font-normal tracking-[0.4em] text-white/70 sm:text-xs"
         >
-          REAL ESTATE &amp; RENOVATION
+          REAL ESTATE &amp; ARCHITECTURE
         </p>
 
         <h1 className="mt-6 text-white">
@@ -118,7 +141,7 @@ export default function Hero() {
               data-hero-line
               className="block text-[2.25rem] font-medium leading-[1.3] tracking-[0.02em] sm:text-[3.5rem] lg:text-[4.25rem]"
             >
-              土地と建物に、
+              挑戦する人が、
             </span>
           </span>
           <span className="block overflow-hidden">
@@ -126,7 +149,7 @@ export default function Hero() {
               data-hero-line
               className="block text-[2.25rem] font-medium leading-[1.3] tracking-[0.02em] sm:text-[3.5rem] lg:text-[4.25rem]"
             >
-              次の価値を。
+              輝ける場所を。
             </span>
           </span>
         </h1>
@@ -135,15 +158,15 @@ export default function Hero() {
           data-hero-sub
           className="mt-8 max-w-xl text-sm font-normal leading-loose text-white/85 sm:text-base"
         >
-          不動産の仲介・管理から、建物のリフォームまで。
+          不動産の仲介・管理から、建物のリフォーム・改修まで。
           <br className="hidden sm:block" />
-          地主さま・オーナーさまの資産の可能性を、一貫して引き出します。
+          沼津を拠点に、地主さま・オーナーさまの資産の可能性を、一貫して引き出します。
         </p>
 
         <div data-hero-cta className="mt-11">
           <Link
-            href="/#contact"
-            className="inline-flex items-center gap-3 bg-white px-9 py-4 text-xs font-medium tracking-[0.2em] text-[#111111] transition-opacity hover:opacity-80"
+            href="/contact"
+            className="inline-flex items-center gap-3 bg-brand px-9 py-4 text-xs font-medium tracking-[0.2em] text-white transition-colors hover:bg-[#f0844d]"
           >
             無料で相談する
             <span aria-hidden>→</span>

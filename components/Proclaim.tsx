@@ -182,7 +182,7 @@ export default function Proclaim() {
 
         <div
           data-proclaim-image-wrap
-          className="media relative h-[46vh] w-full overflow-hidden bg-[#161513] lg:h-[78vh]"
+          className="media-mono relative h-[46vh] w-full overflow-hidden bg-[#161513] lg:h-[78vh]"
         >
           <div
             data-proclaim-parallax

@@ -67,9 +67,9 @@ export default function Contact() {
     <section
       ref={sectionRef}
       id="contact"
-      className="relative w-full overflow-hidden bg-[#111111] px-6 py-24 sm:px-10 lg:px-16 lg:py-32"
+      className="relative w-full overflow-hidden bg-[#102d40] px-6 py-24 sm:px-10 lg:px-16 lg:py-32"
     >
-      {/* 背景写真(モノクロ) */}
+      {/* カラー写真にネイビーのオーバーレイを重ね、可読性を確保する。 */}
       <div className="media-static absolute inset-0 opacity-40">
         <Image
           src="/heroimage1.png"
@@ -81,7 +81,7 @@ export default function Contact() {
       </div>
       <div
         aria-hidden
-        className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80"
+        className="absolute inset-0 bg-gradient-to-b from-[#102d40]/82 via-[#102d40]/68 to-[#102d40]/88"
       />
 
       <div className="relative z-10 mx-auto grid max-w-[1520px] grid-cols-1 gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-20">

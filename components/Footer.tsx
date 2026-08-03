@@ -5,15 +5,17 @@ import Link from "next/link";
 // 遷移できないため、"/#news" のようにパスを明示する。
 const FOOTER_LINKS = [
   { label: "TOP", href: "/" },
-  { label: "事業内容", href: "/#business" },
+  { label: "事業内容", href: "/business" },
   { label: "施工実績", href: "/works" },
   { label: "会社概要", href: "/company" },
   { label: "お知らせ", href: "/news" },
-  { label: "お問い合わせ", href: "/#contact" },
+  { label: "お問い合わせ", href: "/contact" },
 ];
 
+// TODO: サイトポリシー・特定商取引法に基づく表記は、決定版のIA(2026-07-27レビュー)
+// には含まれていないため、公開URLが決まるまでリンク先を仮のまま(#)にしている。
 const LEGAL_LINKS = [
-  { label: "プライバシーポリシー", href: "#" },
+  { label: "プライバシーポリシー", href: "/privacy" },
   { label: "サイトポリシー", href: "#" },
   { label: "特定商取引法に基づく表記", href: "#" },
 ];

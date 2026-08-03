@@ -56,7 +56,7 @@ export default function Strengths() {
   return (
     <section
       ref={sectionRef}
-      className="w-full bg-[#111111] px-6 py-24 text-white sm:px-10 lg:px-16 lg:py-32 xl:px-24"
+      className="w-full bg-[#102d40] px-6 py-24 text-white sm:px-10 lg:px-16 lg:py-32 xl:px-24"
     >
       <div className="mx-auto grid max-w-[1520px] grid-cols-1 gap-14 lg:grid-cols-[360px_1fr] lg:gap-20">
         <div data-strength-head>

@@ -1,15 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #111111;
-  --subtext: #6b6b6b;
-  --border-color: #e6e6e6;
-  --accent: #111111;
-  --surface: #f5f4f2;
-  --contact-bg: #111111;
-  /* ブランドオレンジはロゴ/favicon等のごく一部でのみ使用し、レイアウトはモノクロで統一する */
-  --brand: #c1461f;
+  --background: #fffdf9;
+  --foreground: #172433;
+  --subtext: #5f6a72;
+  --border-color: #dce2e1;
+  --accent: #e16b35;
+  --surface: #f0f4f1;
+  --contact-bg: #102d40;
+  --brand: #e16b35;
 }
 
 @theme inline {
@@ -42,17 +41,38 @@ html {
   scroll-padding-top: 6rem;
 }
 
-/*
- * モノクロ + ホバー彩色。
- * 参考: sunpladining.com — 画像は既定でグレースケール、カーソルを合わせると
- * ゆっくりカラーに戻りつつ僅かにズームする。
- * 画像を包む要素に .media、その中の <img>(next/imageの出力)に効かせる。
- */
+/* 写真は常にフルカラーで表示し、ホバーでは自然なズームのみ行う。 */
 .media {
   overflow: hidden;
 }
 
 .media img {
+  transform: scale(1.001);
+  transition:
+    transform 1.2s cubic-bezier(0.2, 0.7, 0.2, 1);
+  will-change: filter, transform;
+}
+
+.media:hover img,
+.media:focus-within img {
+  transform: scale(1.06);
+}
+
+/* 背景画像も色調変換せず、各セクションのオーバーレイで可読性を確保する。 */
+.media-static img {
+  filter: none;
+}
+
+/*
+ * コーポレートメッセージ(Proclaim)専用: モノトーンベースでカーソルを合わせると
+ * カラーに切り替わる、シックな構成(2026-07-27レビューでこのセクションのみ
+ * パターンAとして採用)。他セクションはフルカラー(.media)のまま。
+ */
+.media-mono {
+  overflow: hidden;
+}
+
+.media-mono img {
   filter: grayscale(100%) contrast(1.02) brightness(0.98);
   transform: scale(1.001);
   transition:
@@ -61,33 +81,42 @@ html {
   will-change: filter, transform;
 }
 
-.media:hover img,
-.media:focus-within img {
+.media-mono:hover img,
+.media-mono:focus-within img {
   filter: grayscale(0%) contrast(1) brightness(1);
   transform: scale(1.06);
 }
 
-/* ヒーロー等、背景として敷く画像は常時グレースケール(ホバー彩色はしない) */
-.media-static img {
-  filter: grayscale(100%) contrast(1.05) brightness(0.85);
-}
-
 /*
- * タッチデバイスはホバーが無い。モノクロ基調を全面で保つため、既定のグレースケールを
- * 維持し、ホバー時のズームだけ無効化する(タップでズームが固定されるのを防ぐ)。
+ * タッチデバイスはホバーが無いため、ズームのみ無効化する
+ * (.media-monoはタップでグレースケール固定になるのを防ぐため彩色のまま止める)。
  */
 @media (hover: none) {
   .media img,
   .media:hover img,
-  .media:focus-within img {
+  .media:focus-within img,
+  .media-mono img,
+  .media-mono:hover img,
+  .media-mono:focus-within img {
     transform: none;
+  }
+
+  .media-mono img {
+    filter: grayscale(0%) contrast(1) brightness(1);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   .media img,
   .media:hover img,
-  .media:focus-within img {
+  .media:focus-within img,
+  .media-mono img,
+  .media-mono:hover img,
+  .media-mono:focus-within img {
     transform: none;
     transition: filter 0.4s ease;
   }

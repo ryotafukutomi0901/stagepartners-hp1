@@ -113,7 +113,7 @@ export default function Challenges() {
 
           {/* 相談への入口 */}
           <Link
-            href="/#contact"
+            href="/contact"
             data-challenge-card
             className="group flex flex-col justify-between bg-[#111111] px-7 py-9 text-white transition-colors duration-300 hover:bg-black sm:px-8 sm:py-10"
           >

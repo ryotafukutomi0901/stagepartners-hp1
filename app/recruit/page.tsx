@@ -3,6 +3,12 @@ import Header from "@/components/Header";
 import ComingSoon from "@/components/ComingSoon";
 import Footer from "@/components/Footer";
 
+// TODO: 2026-07-27デザインレビューで確定したサイトIA(トップ／事業内容／施工実績／
+// 会社概要／ニュース／お問い合わせ／プライバシーポリシー／404／管理者画面)には
+// 採用ページは含まれていない。ナビゲーション(Header/Footer)からは既に外しているが、
+// 既存コンテンツを無断で削除せずこのページ自体は残してある。`/recruit`を
+// 正式導線として残すかどうかはCEO/クライアント判断待ち。
+
 export const metadata: Metadata = {
   title: "採用情報 | STAGE PARTNERS",
   description:

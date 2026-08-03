@@ -20,15 +20,16 @@ const NAV_ITEMS: NavItem[] = [
   { label: "TOP", href: "/" },
   {
     label: "事業内容",
-    href: "/#business",
+    href: "/business",
     children: [
-      { label: "不動産ソリューション（仲介・管理）", href: "/real-estate" },
-      { label: "建設ソリューション（リフォーム）", href: "/construction" },
+      { label: "不動産ソリューション（仲介・管理）", href: "/business/real-estate" },
+      { label: "建設ソリューション（リフォーム）", href: "/business/architecture" },
     ],
   },
+  { label: "施工実績", href: "/works" },
   { label: "会社概要", href: "/company" },
   { label: "お知らせ", href: "/news" },
-  { label: "お問い合わせ", href: "/#contact", cta: true },
+  { label: "お問い合わせ", href: "/contact", cta: true },
 ];
 
 type HeaderProps = {
@@ -55,7 +56,7 @@ export default function Header({ transparent = false }: HeaderProps) {
   const headerRef = useScopedGsap<HTMLElement>(({ scope }) => {
     if (!transparent) {
       gsap.set(scope.current, {
-        backgroundColor: "rgba(17,17,17,0.96)",
+        backgroundColor: "rgba(16,45,64,0.96)",
         borderBottomColor: "rgba(255,255,255,0.08)",
         backdropFilter: "blur(12px)",
       });
@@ -63,12 +64,12 @@ export default function Header({ transparent = false }: HeaderProps) {
     }
 
     gsap.set(scope.current, {
-      backgroundColor: "rgba(17,17,17,0)",
+      backgroundColor: "rgba(16,45,64,0)",
       borderBottomColor: "rgba(255,255,255,0)",
     });
 
     gsap.to(scope.current, {
-      backgroundColor: "rgba(17,17,17,0.96)",
+      backgroundColor: "rgba(16,45,64,0.96)",
       borderBottomColor: "rgba(255,255,255,0.08)",
       backdropFilter: "blur(12px)",
       ease: "none",
@@ -108,7 +109,7 @@ export default function Header({ transparent = false }: HeaderProps) {
               <Link
                 key={item.label}
                 href={item.href}
-                className="inline-flex items-center gap-2 bg-white px-6 py-2.5 text-xs font-medium tracking-[0.12em] text-[#111111] transition-opacity hover:opacity-80"
+                className="inline-flex items-center gap-2 bg-brand px-6 py-2.5 text-xs font-medium tracking-[0.12em] text-white transition-colors hover:bg-[#f0844d]"
               >
                 {item.label}
                 <span aria-hidden>→</span>
@@ -131,7 +132,7 @@ export default function Header({ transparent = false }: HeaderProps) {
 
                 {item.children && (
                   <div className="invisible absolute left-1/2 top-full z-50 -translate-x-1/2 pt-1 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
-                    <ul className="min-w-[220px] border border-white/10 bg-[#111111]/98 py-2 shadow-2xl backdrop-blur-md">
+                    <ul className="min-w-[220px] border border-white/10 bg-[#102d40]/98 py-2 shadow-2xl backdrop-blur-md">
                       {item.children.map((child) => (
                         <li key={child.label}>
                           <Link
@@ -174,7 +175,7 @@ export default function Header({ transparent = false }: HeaderProps) {
       <nav
         id="mobile-nav"
         aria-label="モバイルナビゲーション"
-        className={`overflow-hidden bg-[#111111]/98 backdrop-blur-md transition-[max-height,opacity] duration-500 ease-out lg:hidden ${isMenuOpen ? "max-h-[80vh] opacity-100" : "max-h-0 opacity-0"}`}
+        className={`overflow-hidden bg-[#102d40]/98 backdrop-blur-md transition-[max-height,opacity] duration-500 ease-out lg:hidden ${isMenuOpen ? "max-h-[80vh] opacity-100" : "max-h-0 opacity-0"}`}
       >
         <ul className="flex flex-col border-t border-white/10 px-6 py-2 sm:px-10">
           {NAV_ITEMS.map((item) =>
@@ -183,7 +184,7 @@ export default function Header({ transparent = false }: HeaderProps) {
                 <Link
                   href={item.href}
                   onClick={() => setIsMenuOpen(false)}
-                  className="flex items-center justify-center gap-2 bg-white py-3.5 text-sm font-medium tracking-[0.08em] text-[#111111]"
+                  className="flex items-center justify-center gap-2 bg-brand py-3.5 text-sm font-medium tracking-[0.08em] text-white"
                 >
                   {item.label}
                   <span aria-hidden>→</span>

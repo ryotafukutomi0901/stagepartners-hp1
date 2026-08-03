@@ -23,7 +23,7 @@ const DIVISIONS = [
     ],
     image: "/real-estateimage1.png",
     imagePosition: "object-[70%_80%]",
-    href: "/real-estate",
+    href: "/business/real-estate",
   },
   {
     index: "02",
@@ -39,7 +39,7 @@ const DIVISIONS = [
     ],
     image: "/constructimage1.jpg",
     imagePosition: "object-center",
-    href: "/construction",
+    href: "/business/architecture",
   },
 ];
 

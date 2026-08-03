@@ -6,7 +6,7 @@ import Business from "@/components/Business";
 import Strengths from "@/components/Strengths";
 import Works from "@/components/Works";
 import News from "@/components/News";
-import Contact from "@/components/Contact";
+import ContactCta from "@/components/ContactCta";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -21,7 +21,7 @@ export default function Home() {
         <Strengths />
         <Works />
         <News />
-        <Contact />
+        <ContactCta />
       </main>
       <Footer />
     </>
