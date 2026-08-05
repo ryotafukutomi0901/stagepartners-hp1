@@ -63,49 +63,47 @@ export default function Challenges() {
   return (
     <section
       ref={sectionRef}
-      className="w-full bg-surface px-6 py-24 sm:px-10 lg:px-16 lg:py-32 xl:px-24"
+      className="w-full bg-stone px-6 py-24 sm:px-10 lg:px-16 lg:py-32 xl:px-24"
     >
       <div className="mx-auto max-w-[1520px]">
         <div data-challenge-head className="max-w-2xl">
-          <span
+          <p
             data-challenge-fade
-            className="block text-xs font-medium tracking-[0.25em] text-subtext"
+            className="flex items-center gap-4 font-latin text-[10px] tracking-[0.35em] text-ink-muted sm:text-[11px]"
           >
+            <span aria-hidden className="inline-block h-px w-10 bg-ink/25" />
             YOUR CONCERNS
-          </span>
+          </p>
           <h2
             data-challenge-fade
-            className="mt-6 text-2xl font-medium leading-[1.6] text-foreground sm:text-3xl lg:text-[2.4rem]"
+            className="t-heading mt-8 font-display font-normal text-ink"
           >
             その土地と建物の悩み、
             <br />
             抱え込んでいませんか。
           </h2>
-          <p
-            data-challenge-fade
-            className="mt-6 text-sm font-normal leading-loose text-subtext sm:text-base"
-          >
+          <p data-challenge-fade className="t-note mt-6 max-w-md text-ink-muted">
             地主さま・オーナーさまが直面しやすい課題を、STAGE PARTNERSは不動産と建築の両面から解きほぐします。
           </p>
         </div>
 
         <div
           data-challenge-grid
-          className="mt-14 grid grid-cols-1 gap-px overflow-hidden border border-border bg-border sm:grid-cols-2 lg:mt-16 lg:grid-cols-3"
+          className="mt-14 grid grid-cols-1 gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:mt-16 lg:grid-cols-3"
         >
           {CONCERNS.map((concern) => (
             <div
               key={concern.index}
               data-challenge-card
-              className="bg-surface px-7 py-9 transition-colors duration-300 hover:bg-background sm:px-8 sm:py-10"
+              className="bg-stone px-7 py-9 transition-colors duration-300 hover:bg-paper sm:px-8 sm:py-10"
             >
-              <span className="block text-[11px] font-medium tracking-[0.25em] text-subtext">
+              <span className="block font-latin text-[11px] tracking-[0.25em] text-ink-muted">
                 {concern.index}
               </span>
-              <h3 className="mt-5 text-lg font-medium leading-snug text-foreground sm:text-xl">
+              <h3 className="t-body mt-5 font-display font-normal text-ink">
                 {concern.title}
               </h3>
-              <p className="mt-4 text-sm font-normal leading-loose text-subtext">
+              <p className="mt-4 text-sm font-normal leading-loose text-ink-muted">
                 {concern.body}
               </p>
             </div>
@@ -115,18 +113,18 @@ export default function Challenges() {
           <Link
             href="/contact"
             data-challenge-card
-            className="group flex flex-col justify-between bg-[#111111] px-7 py-9 text-white transition-colors duration-300 hover:bg-black sm:px-8 sm:py-10"
+            className="on-dark group flex flex-col justify-between bg-navy px-7 py-9 text-on-dark transition-colors duration-300 hover:bg-navy-mid sm:px-8 sm:py-10"
           >
-            <span className="block text-[11px] font-medium tracking-[0.25em] text-white/60">
+            <span className="block font-latin text-[11px] tracking-[0.25em] text-on-dark/60">
               CONTACT
             </span>
             <span className="mt-8 block">
-              <span className="block text-lg font-medium leading-snug sm:text-xl">
+              <span className="t-body block font-display font-normal">
                 まずは、
                 <br />
                 話を聞いてほしい。
               </span>
-              <span className="mt-6 inline-flex items-center gap-3 text-xs font-medium tracking-[0.2em] text-white/85 transition-opacity group-hover:opacity-70">
+              <span className="mt-6 inline-flex items-center gap-3 text-xs font-medium tracking-[0.2em] text-on-dark/85 transition-opacity group-hover:opacity-70">
                 無料で相談する
                 <span aria-hidden>→</span>
               </span>

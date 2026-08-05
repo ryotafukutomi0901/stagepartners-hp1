@@ -41,7 +41,7 @@ export default function ContactCta() {
     <section
       ref={sectionRef}
       id="contact"
-      className="relative w-full overflow-hidden bg-[#102d40] px-6 py-24 sm:px-10 lg:px-16 lg:py-32"
+      className="on-dark relative w-full overflow-hidden bg-navy px-6 py-24 sm:px-10 lg:px-16 lg:py-32"
     >
       <div className="absolute inset-0">
         <div data-contact-image className="absolute inset-x-0 -top-[10%] -bottom-[10%]">
@@ -56,20 +56,21 @@ export default function ContactCta() {
       </div>
       <div
         aria-hidden
-        className="absolute inset-0 bg-gradient-to-b from-[#102d40]/82 via-[#102d40]/68 to-[#102d40]/88"
+        className="absolute inset-0 bg-gradient-to-b from-navy/82 via-navy/68 to-navy/88"
       />
 
       <div className="relative z-10 mx-auto grid max-w-[1520px] grid-cols-1 gap-12 lg:grid-cols-[1fr_auto] lg:items-end lg:gap-20">
-        <div className="text-white">
-          <span
+        <div className="text-on-dark">
+          <p
             data-contact-fade
-            className="block text-xs font-medium tracking-[0.25em] text-white/60"
+            className="flex items-center gap-4 font-latin text-[10px] tracking-[0.35em] text-on-dark/60 sm:text-[11px]"
           >
+            <span aria-hidden className="inline-block h-px w-10 bg-on-dark/30" />
             CONTACT
-          </span>
+          </p>
           <h2
             data-contact-fade
-            className="mt-6 text-2xl font-medium leading-[1.55] sm:text-3xl lg:text-[2.6rem]"
+            className="t-heading mt-8 font-display font-normal"
           >
             土地と建物のこと、
             <br />
@@ -77,7 +78,7 @@ export default function ContactCta() {
           </h2>
           <p
             data-contact-fade
-            className="mt-7 max-w-md text-sm font-normal leading-loose text-white/70 sm:text-base"
+            className="t-note mt-7 max-w-md text-on-dark/70"
           >
             売却・賃貸・リフォーム・管理まで、どんな段階のご相談でも構いません。ご相談は無料です。
           </p>
@@ -88,7 +89,7 @@ export default function ContactCta() {
               <li key={item.type}>
                 <Link
                   href={`/contact?type=${item.type}`}
-                  className="inline-flex items-center gap-2.5 border border-white/30 px-5 py-2.5 text-xs tracking-[0.1em] text-white/80 transition-colors duration-300 hover:border-white hover:text-white"
+                  className="inline-flex items-center gap-2.5 border border-on-dark/30 px-5 py-2.5 text-xs tracking-[0.1em] text-on-dark/80 transition-colors duration-300 hover:border-on-dark hover:text-on-dark"
                 >
                   {item.label}
                   <span aria-hidden className="text-[10px]">
@@ -103,7 +104,7 @@ export default function ContactCta() {
         <div data-contact-fade className="flex flex-col items-start gap-8 lg:items-end">
           <Link
             href="/contact"
-            className="group inline-flex items-center gap-4 bg-brand px-10 py-5 text-xs font-medium tracking-[0.2em] text-white transition-opacity hover:opacity-85"
+            className="group inline-flex items-center gap-4 bg-on-dark px-10 py-5 text-xs font-medium tracking-[0.2em] text-navy transition-colors duration-300 hover:bg-navy-mid hover:text-on-dark"
           >
             お問い合わせフォームへ
             <span
@@ -114,10 +115,10 @@ export default function ContactCta() {
             </span>
           </Link>
 
-          <div className="text-white/70">
-            <p className="text-[11px] tracking-[0.2em] text-white/50">TEL</p>
-            <p className="mt-2 text-lg tracking-[0.05em] text-white">000-000-0000</p>
-            <p className="mt-1 text-xs text-white/50">受付時間　平日 9:00 – 18:00</p>
+          <div className="text-on-dark/70">
+            <p className="font-latin text-[11px] tracking-[0.2em] text-on-dark/50">TEL</p>
+            <p className="mt-2 font-latin text-lg tracking-[0.05em] text-on-dark">000-000-0000</p>
+            <p className="mt-1 text-xs text-on-dark/50">受付時間　平日 9:00 – 18:00</p>
           </div>
         </div>
       </div>

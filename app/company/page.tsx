@@ -12,7 +12,7 @@ export default function CompanyOverviewPage() {
   return (
     <>
       <Header />
-      <main className="flex flex-1 flex-col">
+      <main id="main" className="flex flex-1 flex-col">
         <Company />
       </main>
       <Footer />

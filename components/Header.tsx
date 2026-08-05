@@ -12,7 +12,7 @@ type NavItem = {
   label: string;
   href: string;
   children?: { label: string; href: string }[];
-  // ドロップダウン展開せず、白背景ボタンとして強調表示する項目(現状は「お問い合わせ」のみ)。
+  // ドロップダウン展開せず、強調ボタンとして表示する項目(現状は「お問い合わせ」のみ)。
   cta?: boolean;
 };
 
@@ -34,8 +34,8 @@ const NAV_ITEMS: NavItem[] = [
 
 type HeaderProps = {
   // ヒーローに濃い背景画像がある(トップページの)場合だけ、最上部を透明にして
-  // スクロールで濃い黒へふわっと変化させる。それ以外のページは背景が白いため、
-  // 最初から濃い背景で固定し、白文字のヘッダーが見えなくなるのを防ぐ。
+  // スクロールで濃いネイビーへふわっと変化させる。それ以外のページは最初から
+  // 濃い背景で固定し、白抜き文字のヘッダーが見えなくなるのを防ぐ。
   transparent?: boolean;
 };
 
@@ -56,21 +56,21 @@ export default function Header({ transparent = false }: HeaderProps) {
   const headerRef = useScopedGsap<HTMLElement>(({ scope }) => {
     if (!transparent) {
       gsap.set(scope.current, {
-        backgroundColor: "rgba(16,45,64,0.96)",
-        borderBottomColor: "rgba(255,255,255,0.08)",
+        backgroundColor: "rgba(14,35,56,0.96)",
+        borderBottomColor: "rgba(243,244,245,0.08)",
         backdropFilter: "blur(12px)",
       });
       return;
     }
 
     gsap.set(scope.current, {
-      backgroundColor: "rgba(16,45,64,0)",
-      borderBottomColor: "rgba(255,255,255,0)",
+      backgroundColor: "rgba(14,35,56,0)",
+      borderBottomColor: "rgba(243,244,245,0)",
     });
 
     gsap.to(scope.current, {
-      backgroundColor: "rgba(16,45,64,0.96)",
-      borderBottomColor: "rgba(255,255,255,0.08)",
+      backgroundColor: "rgba(14,35,56,0.96)",
+      borderBottomColor: "rgba(243,244,245,0.08)",
       backdropFilter: "blur(12px)",
       ease: "none",
       scrollTrigger: { start: 0, end: 120, scrub: 0.3 },
@@ -81,7 +81,7 @@ export default function Header({ transparent = false }: HeaderProps) {
     <header
       ref={headerRef}
       data-site-header
-      className="fixed top-0 left-0 z-50 w-full border-b border-transparent"
+      className="on-dark fixed top-0 left-0 z-50 w-full border-b border-transparent"
     >
       <div className="mx-auto flex max-w-[1520px] items-center justify-between px-6 py-4 sm:px-10 lg:px-16">
         <Link
@@ -109,7 +109,7 @@ export default function Header({ transparent = false }: HeaderProps) {
               <Link
                 key={item.label}
                 href={item.href}
-                className="inline-flex items-center gap-2 bg-brand px-6 py-2.5 text-xs font-medium tracking-[0.12em] text-white transition-colors hover:bg-[#f0844d]"
+                className="inline-flex items-center gap-2 bg-on-dark px-6 py-2.5 text-xs font-medium tracking-[0.12em] text-navy transition-colors hover:bg-navy-mid hover:text-on-dark"
               >
                 {item.label}
                 <span aria-hidden>→</span>
@@ -119,25 +119,25 @@ export default function Header({ transparent = false }: HeaderProps) {
                 <Link
                   href={item.href}
                   onClick={item.href === "/" ? scrollTopIfHome : undefined}
-                  className="inline-flex items-center gap-1.5 py-6 text-xs font-normal tracking-[0.12em] text-white/80 transition-colors hover:text-white"
+                  className="inline-flex items-center gap-1.5 py-6 text-xs font-normal tracking-[0.12em] text-on-dark/80 transition-colors hover:text-on-dark"
                 >
                   {item.label}
                   {item.children && (
                     <span
                       aria-hidden
-                      className="mt-px inline-block h-1 w-1 rotate-45 border-b border-r border-white/50 transition-colors group-hover:border-white"
+                      className="mt-px inline-block h-1 w-1 rotate-45 border-b border-r border-on-dark/50 transition-colors group-hover:border-on-dark"
                     />
                   )}
                 </Link>
 
                 {item.children && (
                   <div className="invisible absolute left-1/2 top-full z-50 -translate-x-1/2 pt-1 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
-                    <ul className="min-w-[220px] border border-white/10 bg-[#102d40]/98 py-2 shadow-2xl backdrop-blur-md">
+                    <ul className="min-w-[220px] border border-on-dark/10 bg-navy/98 py-2 shadow-2xl backdrop-blur-md">
                       {item.children.map((child) => (
                         <li key={child.label}>
                           <Link
                             href={child.href}
-                            className="block whitespace-nowrap px-5 py-3 text-xs font-normal tracking-[0.08em] text-white/70 transition-colors hover:bg-white/5 hover:text-white"
+                            className="block whitespace-nowrap px-5 py-3 text-xs font-normal tracking-[0.08em] text-on-dark/70 transition-colors hover:bg-on-dark/5 hover:text-on-dark"
                           >
                             {child.label}
                           </Link>
@@ -160,13 +160,13 @@ export default function Header({ transparent = false }: HeaderProps) {
           className="flex h-9 w-9 flex-col items-center justify-center gap-1.5 lg:hidden"
         >
           <span
-            className={`block h-px w-5 bg-white transition-transform duration-300 ${isMenuOpen ? "translate-y-[3.5px] rotate-45" : ""}`}
+            className={`block h-px w-5 bg-on-dark transition-transform duration-300 ${isMenuOpen ? "translate-y-[3.5px] rotate-45" : ""}`}
           />
           <span
-            className={`block h-px w-5 bg-white transition-opacity duration-300 ${isMenuOpen ? "opacity-0" : "opacity-100"}`}
+            className={`block h-px w-5 bg-on-dark transition-opacity duration-300 ${isMenuOpen ? "opacity-0" : "opacity-100"}`}
           />
           <span
-            className={`block h-px w-5 bg-white transition-transform duration-300 ${isMenuOpen ? "-translate-y-[3.5px] -rotate-45" : ""}`}
+            className={`block h-px w-5 bg-on-dark transition-transform duration-300 ${isMenuOpen ? "-translate-y-[3.5px] -rotate-45" : ""}`}
           />
         </button>
       </div>
@@ -175,23 +175,23 @@ export default function Header({ transparent = false }: HeaderProps) {
       <nav
         id="mobile-nav"
         aria-label="モバイルナビゲーション"
-        className={`overflow-hidden bg-[#102d40]/98 backdrop-blur-md transition-[max-height,opacity] duration-500 ease-out lg:hidden ${isMenuOpen ? "max-h-[80vh] opacity-100" : "max-h-0 opacity-0"}`}
+        className={`overflow-hidden bg-navy/98 backdrop-blur-md transition-[max-height,opacity] duration-500 ease-out lg:hidden ${isMenuOpen ? "max-h-[80vh] opacity-100" : "max-h-0 opacity-0"}`}
       >
-        <ul className="flex flex-col border-t border-white/10 px-6 py-2 sm:px-10">
+        <ul className="flex flex-col border-t border-on-dark/10 px-6 py-2 sm:px-10">
           {NAV_ITEMS.map((item) =>
             item.cta ? (
               <li key={item.label} className="py-4">
                 <Link
                   href={item.href}
                   onClick={() => setIsMenuOpen(false)}
-                  className="flex items-center justify-center gap-2 bg-brand py-3.5 text-sm font-medium tracking-[0.08em] text-white"
+                  className="flex items-center justify-center gap-2 bg-on-dark py-3.5 text-sm font-medium tracking-[0.08em] text-navy"
                 >
                   {item.label}
                   <span aria-hidden>→</span>
                 </Link>
               </li>
             ) : (
-              <li key={item.label} className="border-b border-white/5">
+              <li key={item.label} className="border-b border-on-dark/5">
                 <div className="flex items-center justify-between">
                   <Link
                     href={item.href}
@@ -199,7 +199,7 @@ export default function Header({ transparent = false }: HeaderProps) {
                       if (item.href === "/") scrollTopIfHome(e);
                       setIsMenuOpen(false);
                     }}
-                    className="block flex-1 py-4 text-sm font-normal tracking-[0.08em] text-white/85"
+                    className="block flex-1 py-4 text-sm font-normal tracking-[0.08em] text-on-dark/85"
                   >
                     {item.label}
                   </Link>
@@ -211,10 +211,10 @@ export default function Header({ transparent = false }: HeaderProps) {
                       onClick={() =>
                         setOpenMobile((v) => (v === item.label ? null : item.label))
                       }
-                      className="flex h-11 w-11 items-center justify-center text-white/60"
+                      className="flex h-11 w-11 items-center justify-center text-on-dark/60"
                     >
                       <span
-                        className={`inline-block h-2 w-2 rotate-45 border-b border-r border-white/60 transition-transform duration-300 ${openMobile === item.label ? "-rotate-[135deg]" : ""}`}
+                        className={`inline-block h-2 w-2 rotate-45 border-b border-r border-on-dark/60 transition-transform duration-300 ${openMobile === item.label ? "-rotate-[135deg]" : ""}`}
                       />
                     </button>
                   )}
@@ -229,7 +229,7 @@ export default function Header({ transparent = false }: HeaderProps) {
                         <Link
                           href={child.href}
                           onClick={() => setIsMenuOpen(false)}
-                          className="block py-3 pl-4 text-xs font-normal tracking-[0.06em] text-white/60"
+                          className="block py-3 pl-4 text-xs font-normal tracking-[0.06em] text-on-dark/60"
                         >
                           {child.label}
                         </Link>

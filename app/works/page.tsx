@@ -13,7 +13,7 @@ export default function WorksPage() {
   return (
     <>
       <Header />
-      <main className="flex flex-1 flex-col">
+      <main id="main" className="flex flex-1 flex-col">
         <ComingSoon
           eyebrow="WORKS"
           title="施工実績"

@@ -74,7 +74,7 @@ export default function Works() {
   return (
     <section
       ref={sectionRef}
-      className="w-full bg-background px-6 py-24 sm:px-10 lg:px-16 lg:py-32 xl:px-24"
+      className="w-full bg-paper px-6 py-24 sm:px-10 lg:px-16 lg:py-32 xl:px-24"
     >
       <div className="mx-auto max-w-[1520px]">
         <div
@@ -82,23 +82,21 @@ export default function Works() {
           className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between"
         >
           <div>
-            <span
+            <p
               data-works-fade
-              className="block text-xs font-medium tracking-[0.25em] text-subtext"
+              className="flex items-center gap-4 font-latin text-[10px] tracking-[0.35em] text-ink-muted sm:text-[11px]"
             >
+              <span aria-hidden className="inline-block h-px w-10 bg-ink/25" />
               WORKS
-            </span>
+            </p>
             <h2
               data-works-fade
-              className="mt-6 text-2xl font-medium leading-[1.6] text-foreground sm:text-3xl lg:text-[2.4rem]"
+              className="t-heading mt-8 font-display font-normal text-ink"
             >
               施工実績
             </h2>
           </div>
-          <p
-            data-works-fade
-            className="max-w-sm text-sm font-normal leading-loose text-subtext sm:text-base"
-          >
+          <p data-works-fade className="t-note max-w-sm text-ink-muted">
             土地と建物に価値を加えてきた、私たちの仕事の一部をご紹介します。
           </p>
         </div>
@@ -118,13 +116,13 @@ export default function Works() {
                   className={`object-cover ${work.position}`}
                 />
               </div>
-              <span className="mt-6 block text-[11px] font-medium tracking-[0.25em] text-subtext">
+              <span className="mt-6 block font-latin text-[11px] tracking-[0.25em] text-ink-muted">
                 {work.category}
               </span>
-              <h3 className="mt-3 text-lg font-medium leading-snug text-foreground sm:text-xl">
+              <h3 className="t-body mt-3 font-display font-normal text-ink">
                 {work.title}
               </h3>
-              <p className="mt-2 text-xs font-normal tracking-[0.1em] text-subtext">
+              <p className="mt-2 font-latin text-[11px] tracking-[0.12em] text-ink-muted">
                 {work.place}
               </p>
             </article>
@@ -134,7 +132,7 @@ export default function Works() {
         <div data-works-cta className="mt-14 flex justify-center lg:mt-16">
           <Link
             href="/works"
-            className="inline-flex items-center gap-3 bg-foreground px-8 py-4 text-xs font-medium tracking-[0.2em] text-background transition-opacity hover:opacity-80"
+            className="inline-flex items-center gap-3 bg-ink px-8 py-4 text-xs font-medium tracking-[0.2em] text-paper transition-opacity hover:opacity-80"
           >
             実績一覧を見る
             <span aria-hidden>→</span>

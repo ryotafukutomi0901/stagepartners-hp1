@@ -55,7 +55,7 @@ export default function Company() {
     <section
       ref={sectionRef}
       id="company"
-      className="w-full bg-background px-6 py-24 sm:px-10 lg:px-16 lg:py-32 xl:px-24"
+      className="w-full bg-paper px-6 py-24 sm:px-10 lg:px-16 lg:py-32 xl:px-24"
     >
       <div className="mx-auto grid w-full max-w-[1520px] grid-cols-1 items-center gap-12 lg:grid-cols-[1fr_0.9fr] lg:gap-20">
         <div
@@ -72,29 +72,30 @@ export default function Company() {
         </div>
 
         <div>
-          <span
+          <p
             data-company-text
-            className="block text-xs font-medium tracking-[0.25em] text-subtext"
+            className="flex items-center gap-4 font-latin text-[10px] tracking-[0.35em] text-ink-muted sm:text-[11px]"
           >
+            <span aria-hidden className="inline-block h-px w-10 bg-ink/25" />
             COMPANY
-          </span>
+          </p>
           <h2
             data-company-text
-            className="mt-6 text-2xl font-medium leading-[1.6] text-foreground sm:text-3xl lg:text-[2.4rem]"
+            className="t-heading mt-8 font-display font-normal text-ink"
           >
             会社概要
           </h2>
 
-          <dl data-company-text className="mt-10 border-t border-border">
+          <dl data-company-text className="mt-10 border-t border-line">
             {PROFILE.map((row) => (
               <div
                 key={row.label}
-                className="flex flex-col gap-1 border-b border-border py-5 sm:flex-row sm:gap-8"
+                className="flex flex-col gap-1 border-b border-line py-5 sm:flex-row sm:gap-8"
               >
-                <dt className="text-xs font-medium tracking-[0.15em] text-subtext sm:w-28 sm:shrink-0 sm:pt-1">
+                <dt className="font-latin text-[11px] tracking-[0.15em] text-ink-muted sm:w-28 sm:shrink-0 sm:pt-1">
                   {row.label}
                 </dt>
-                <dd className="text-sm font-normal leading-relaxed text-foreground sm:text-base">
+                <dd className="text-sm font-normal leading-relaxed text-ink sm:text-base">
                   {Array.isArray(row.value)
                     ? row.value.map((line) => (
                       <span key={line} className="block">

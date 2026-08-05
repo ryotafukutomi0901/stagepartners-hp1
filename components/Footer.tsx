@@ -22,7 +22,7 @@ const LEGAL_LINKS = [
 
 export default function Footer() {
   return (
-    <footer className="w-full border-t border-border bg-background px-6 py-16 sm:px-10 lg:px-16 xl:px-24">
+    <footer className="w-full border-t border-line bg-paper px-6 py-16 sm:px-10 lg:px-16 xl:px-24">
       <div className="mx-auto flex max-w-[1520px] flex-col gap-10 sm:flex-row sm:items-start sm:justify-between">
         <Link href="/" aria-label="STAGE PARTNERS トップへ">
           <Image
@@ -40,7 +40,7 @@ export default function Footer() {
               <li key={link.label}>
                 <Link
                   href={link.href}
-                  className="whitespace-nowrap text-xs font-normal tracking-[0.1em] text-subtext transition-colors hover:text-foreground"
+                  className="whitespace-nowrap text-xs font-normal tracking-[0.1em] text-ink-muted transition-colors hover:text-ink"
                 >
                   {link.label}
                 </Link>
@@ -50,8 +50,8 @@ export default function Footer() {
         </nav>
       </div>
 
-      <div className="mx-auto mt-16 flex max-w-[1520px] flex-col gap-4 border-t border-border pt-8 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-[10px] font-normal tracking-[0.05em] text-subtext">
+      <div className="mx-auto mt-16 flex max-w-[1520px] flex-col gap-4 border-t border-line pt-8 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-[10px] font-normal tracking-[0.05em] text-ink-muted">
           © STAGE PARTNERS All Rights Reserved.
         </p>
 
@@ -61,7 +61,7 @@ export default function Footer() {
               <li key={link.label}>
                 <a
                   href={link.href}
-                  className="whitespace-nowrap text-[9.5px] font-normal tracking-[0.05em] text-subtext transition-colors hover:text-foreground"
+                  className="whitespace-nowrap text-[9.5px] font-normal tracking-[0.05em] text-ink-muted transition-colors hover:text-ink"
                 >
                   {link.label}
                 </a>

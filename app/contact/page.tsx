@@ -13,7 +13,7 @@ export default function ContactPage() {
   return (
     <>
       <Header />
-      <main className="flex flex-1 flex-col">
+      <main id="main" className="flex flex-1 flex-col">
         <Contact />
       </main>
       <Footer />

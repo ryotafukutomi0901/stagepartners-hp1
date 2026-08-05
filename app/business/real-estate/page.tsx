@@ -13,7 +13,7 @@ export default function RealEstatePage() {
   return (
     <>
       <Header />
-      <main className="flex flex-1 flex-col">
+      <main id="main" className="flex flex-1 flex-col">
         <ComingSoon
           eyebrow="REAL ESTATE SOLUTIONS"
           title="不動産ソリューション"

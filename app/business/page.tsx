@@ -13,7 +13,7 @@ export default function BusinessPage() {
   return (
     <>
       <Header />
-      <main className="flex flex-1 flex-col">
+      <main id="main" className="flex flex-1 flex-col">
         <ComingSoon
           eyebrow="OUR SOLUTIONS"
           title="事業内容"

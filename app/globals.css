@@ -1,34 +1,62 @@
 @import "tailwindcss";
 
+/*
+ * STAGE PARTNERS — デザイントークン
+ *
+ * 配色は「ネイビー / グレージュ / 白 / 黒」の4系統のみで構成する。
+ */
 :root {
-  --background: #fffdf9;
-  --foreground: #172433;
-  --subtext: #5f6a72;
-  --border-color: #dce2e1;
-  --accent: #e16b35;
-  --surface: #f0f4f1;
-  --contact-bg: #102d40;
-  --brand: #e16b35;
+  /* 明色サーフェス */
+  --paper: #faf7f1; /* ページ基調(温かみのあるアイボリー) */
+  --stone: #e8e0cf; /* 帯セクション(グレージュを強めに) */
+  --stone-deep: #d9cdb3; /* stone 上の罫線・沈めたカード */
+
+  /* ネイビー(ブランドの青) */
+  --navy-deep: #091726; /* フッター(最暗) */
+  --navy: #0e2338; /* 暗色セクション */
+  --navy-mid: #1b3b5a; /* ボタン・強調 */
+  --navy-soft: #2e5375; /* ラベル・アイコン */
+
+  /* 明色セクション上のテキスト(温かみのある黒へ) */
+  --ink: #1a1613;
+  --ink-muted: #6b6255;
+
+  /* 暗色セクション上のテキスト */
+  --on-dark: #f3f4f5;
+  --on-dark-muted: rgba(243, 244, 245, 0.6);
+
+  /* 罫線 */
+  --line: rgba(26, 22, 19, 0.14);
+  --line-dark: rgba(243, 244, 245, 0.16);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-subtext: var(--subtext);
-  --color-border: var(--border-color);
-  --color-accent: var(--accent);
-  --color-surface: var(--surface);
-  --color-contact: var(--contact-bg);
-  --color-brand: var(--brand);
-  --font-sans: var(--font-shippori-mincho), serif;
+  --color-paper: var(--paper);
+  --color-stone: var(--stone);
+  --color-stone-deep: var(--stone-deep);
+  --color-navy-deep: var(--navy-deep);
+  --color-navy: var(--navy);
+  --color-navy-mid: var(--navy-mid);
+  --color-navy-soft: var(--navy-soft);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-on-dark: var(--on-dark);
+  --color-on-dark-muted: var(--on-dark-muted);
+  --color-line: var(--line);
+  --color-line-dark: var(--line-dark);
+
+  --font-sans: var(--font-noto-sans-jp), system-ui, sans-serif;
+  --font-display: var(--font-shippori-mincho), serif;
+  --font-latin: var(--font-inter), var(--font-noto-sans-jp), sans-serif;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--paper);
+  color: var(--ink);
   font-family: var(--font-sans);
-  font-weight: 300;
+  font-weight: 400;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 * {
@@ -37,34 +65,45 @@ body {
 
 html {
   scroll-behavior: smooth;
-  /* sticky/absoluteヘッダーにアンカー先が隠れないようにする */
-  scroll-padding-top: 6rem;
+  /* 固定ヘッダーにアンカー先が隠れないようにする */
+  scroll-padding-top: 5.5rem;
 }
 
-/* 写真は常にフルカラーで表示し、ホバーでは自然なズームのみ行う。 */
+/* キーボード操作時のフォーカスを必ず視認できるようにする(WCAG 2.2 AA) */
+:focus-visible {
+  outline: 2px solid var(--navy-mid);
+  outline-offset: 3px;
+}
+
+.on-dark :focus-visible {
+  outline-color: var(--on-dark);
+}
+
+/*
+ * 写真はフルカラーで表示する(モノクロ処理はしない)。
+ * ホバー時はゆっくりズームのみ行う。
+ */
 .media {
   overflow: hidden;
 }
 
 .media img {
   transform: scale(1.001);
-  transition:
-    transform 1.2s cubic-bezier(0.2, 0.7, 0.2, 1);
-  will-change: filter, transform;
+  transition: transform 1.2s cubic-bezier(0.2, 0.7, 0.2, 1);
+  will-change: transform;
 }
 
 .media:hover img,
 .media:focus-within img {
-  transform: scale(1.06);
+  transform: scale(1.05);
 }
 
-/* 背景画像も色調変換せず、各セクションのオーバーレイで可読性を確保する。 */
 .media-static img {
   filter: none;
 }
 
 /*
- * コーポレートメッセージ(Proclaim)専用: モノトーンベースでカーソルを合わせると
+ * コーポレートメッセージ(Message)専用: モノトーンベースでカーソルを合わせると
  * カラーに切り替わる、シックな構成(2026-07-27レビューでこのセクションのみ
  * パターンAとして採用)。他セクションはフルカラー(.media)のまま。
  */
@@ -87,10 +126,7 @@ html {
   transform: scale(1.06);
 }
 
-/*
- * タッチデバイスはホバーが無いため、ズームのみ無効化する
- * (.media-monoはタップでグレースケール固定になるのを防ぐため彩色のまま止める)。
- */
+/* タッチデバイスはホバーが無いため、ズームを無効化する */
 @media (hover: none) {
   .media img,
   .media:hover img,
@@ -119,5 +155,132 @@ html {
   .media-mono:focus-within img {
     transform: none;
     transition: filter 0.4s ease;
+  }
+}
+
+/*
+ * 施工実績(Works)の横に流れる帯。
+ * 現行のWorksは静止グリッド(流れる形式は不採用)のため未使用だが、
+ * 将来hp2側の演出に揃える可能性を考慮しトークンとして残す。
+ */
+.works-marquee {
+  overflow: hidden;
+}
+
+.works-marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 1.5rem;
+  padding-inline: 1.5rem;
+  animation: works-flow 36s linear infinite;
+}
+
+@media (min-width: 640px) {
+  .works-marquee-track {
+    gap: 2rem;
+    padding-inline: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .works-marquee-track {
+    padding-inline: 3.5rem;
+  }
+}
+
+.works-marquee:hover .works-marquee-track,
+.works-marquee:focus-within .works-marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes works-flow {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .works-marquee {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .works-marquee-track {
+    animation: none;
+  }
+}
+
+/*
+ * 文字サイズトークン。本文コンテンツは「見出し／強調」「通常」の2階層、
+ * 説明文・キャプションは「注記」の1階層とし、サイト全体でこの3クラスのみを
+ * 使い回す(ヒーローは対象外)。
+ */
+.t-heading {
+  font-size: 1.75rem;
+  line-height: 1.5;
+}
+
+.t-heading-tight {
+  font-size: 1.6rem;
+  line-height: 1.4;
+}
+
+.t-emphasis {
+  font-size: 2rem;
+  line-height: 1.4;
+}
+
+.t-body {
+  font-size: 1.25rem;
+  line-height: 1.4;
+}
+
+.t-note {
+  font-size: 0.8125rem;
+  line-height: 1.85;
+}
+
+@media (min-width: 640px) {
+  .t-heading {
+    font-size: 1.9rem;
+  }
+  .t-heading-tight {
+    font-size: 1.7rem;
+  }
+  .t-emphasis {
+    font-size: 2.4rem;
+  }
+  .t-body {
+    font-size: 1.5rem;
+  }
+  .t-note {
+    font-size: 0.875rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .t-heading {
+    font-size: 2.35rem;
+  }
+  .t-heading-tight {
+    font-size: 1.9rem;
+  }
+  .t-emphasis {
+    font-size: 3.4rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .t-heading {
+    font-size: 2.9rem;
+  }
+  .t-heading-tight {
+    font-size: 2.1rem;
+  }
+  .t-emphasis {
+    font-size: 4.4rem;
   }
 }

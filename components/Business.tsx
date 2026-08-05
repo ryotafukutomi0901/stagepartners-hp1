@@ -86,28 +86,26 @@ export default function Business() {
     <section
       ref={sectionRef}
       id="business"
-      className="w-full bg-background px-6 py-24 sm:px-10 lg:px-16 lg:py-32 xl:px-24"
+      className="w-full bg-paper px-6 py-24 sm:px-10 lg:px-16 lg:py-32 xl:px-24"
     >
       <div className="mx-auto max-w-[1520px]">
         <div data-business-intro className="max-w-2xl">
-          <span
+          <p
             data-business-fade
-            className="block text-xs font-medium tracking-[0.25em] text-subtext"
+            className="flex items-center gap-4 font-latin text-[10px] tracking-[0.35em] text-ink-muted sm:text-[11px]"
           >
+            <span aria-hidden className="inline-block h-px w-10 bg-ink/25" />
             OUR SOLUTIONS
-          </span>
+          </p>
           <h2
             data-business-fade
-            className="mt-6 text-2xl font-medium leading-[1.6] text-foreground sm:text-3xl lg:text-[2.4rem]"
+            className="t-heading mt-8 font-display font-normal text-ink"
           >
             不動産と建築を、
             <br />
             一社でつなぐ。
           </h2>
-          <p
-            data-business-fade
-            className="mt-6 text-sm font-normal leading-loose text-subtext sm:text-base"
-          >
+          <p data-business-fade className="t-note mt-6 max-w-md text-ink-muted">
             仲介で終わらせず、リフォームで価値を高め、管理まで。事業を分けずに一気通貫で担うからこそ、土地と建物の可能性を最大限に引き出せます。
           </p>
         </div>
@@ -131,7 +129,7 @@ export default function Business() {
                   sizes="(min-width: 1024px) 48vw, 100vw"
                   className={`object-cover ${division.imagePosition}`}
                 />
-                <span className="absolute left-6 top-6 text-[11px] font-medium tracking-[0.3em] text-white/85">
+                <span className="absolute left-6 top-6 font-latin text-[11px] tracking-[0.3em] text-on-dark/85">
                   {division.en}
                 </span>
               </div>
@@ -139,24 +137,27 @@ export default function Business() {
               <div className="lg:px-4">
                 <span
                   data-business-text
-                  className="block text-xs font-medium tracking-[0.25em] text-subtext"
+                  className="block font-latin text-[11px] tracking-[0.25em] text-ink-muted"
                 >
                   {division.index}　{division.lead}
                 </span>
-                <h3 data-business-text className="mt-4">
+                <h3 data-business-text className="mt-5">
                   <Link
                     href={division.href}
-                    className="inline-flex items-center gap-2 text-2xl font-medium text-foreground transition-opacity hover:opacity-60 sm:text-3xl"
+                    className="t-heading-tight group inline-flex items-baseline gap-3 font-display font-normal text-ink transition-colors hover:text-navy-mid"
                   >
                     {division.title}
-                    <span aria-hidden className="text-lg sm:text-xl">
+                    <span
+                      aria-hidden
+                      className="text-lg transition-transform duration-300 group-hover:translate-x-1 sm:text-xl"
+                    >
                       →
                     </span>
                   </Link>
                 </h3>
                 <p
                   data-business-text
-                  className="mt-5 max-w-md text-sm font-normal leading-loose text-subtext sm:text-base"
+                  className="t-note mt-5 max-w-md text-ink-muted"
                 >
                   {division.description}
                 </p>
@@ -165,11 +166,11 @@ export default function Business() {
                   {division.points.map((point) => (
                     <li
                       key={point}
-                      className="flex gap-3 text-sm font-normal leading-relaxed text-foreground/80"
+                      className="flex gap-3 text-sm font-normal leading-relaxed text-ink/80"
                     >
                       <span
                         aria-hidden
-                        className="mt-2.5 inline-block h-px w-4 shrink-0 bg-foreground/40"
+                        className="mt-2.5 inline-block h-px w-4 shrink-0 bg-ink/40"
                       />
                       <span>{point}</span>
                     </li>

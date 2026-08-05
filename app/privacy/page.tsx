@@ -16,7 +16,7 @@ export default function PrivacyPage() {
   return (
     <>
       <Header />
-      <main className="flex flex-1 flex-col">
+      <main id="main" className="flex flex-1 flex-col">
         <ComingSoon
           eyebrow="PRIVACY POLICY"
           title="プライバシーポリシー"

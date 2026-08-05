@@ -19,7 +19,7 @@ export default function RecruitPage() {
   return (
     <>
       <Header />
-      <main className="flex flex-1 flex-col">
+      <main id="main" className="flex flex-1 flex-col">
         <ComingSoon
           eyebrow="RECRUIT"
           title="採用情報"

@@ -61,19 +61,20 @@ export default function News() {
     <section
       ref={sectionRef}
       id="news"
-      className="w-full bg-surface px-6 py-24 sm:px-10 lg:px-16 lg:py-32 xl:px-24"
+      className="w-full bg-stone px-6 py-24 sm:px-10 lg:px-16 lg:py-32 xl:px-24"
     >
       <div className="mx-auto grid max-w-[1520px] grid-cols-1 gap-12 lg:grid-cols-[360px_1fr] lg:gap-20">
         <div data-news-head>
-          <span
+          <p
             data-news-fade
-            className="block text-xs font-medium tracking-[0.25em] text-subtext"
+            className="flex items-center gap-4 font-latin text-[10px] tracking-[0.35em] text-ink-muted sm:text-[11px]"
           >
+            <span aria-hidden className="inline-block h-px w-10 bg-ink/25" />
             NEWS
-          </span>
+          </p>
           <h2
             data-news-fade
-            className="mt-6 text-2xl font-medium leading-[1.6] text-foreground sm:text-3xl lg:text-[2.4rem]"
+            className="t-heading mt-8 font-display font-normal text-ink"
           >
             お知らせ
           </h2>
@@ -82,7 +83,7 @@ export default function News() {
           <div data-news-fade className="mt-8">
             <Link
               href="/news"
-              className="inline-flex items-center gap-3 bg-foreground px-8 py-4 text-xs font-medium tracking-[0.2em] text-background transition-opacity hover:opacity-80"
+              className="inline-flex items-center gap-3 bg-ink px-8 py-4 text-xs font-medium tracking-[0.2em] text-paper transition-opacity hover:opacity-80"
             >
               お知らせ一覧を見る
               <span aria-hidden>→</span>
@@ -92,23 +93,23 @@ export default function News() {
 
         <ul data-news-list className="flex flex-col">
           {NEWS.map((item) => (
-            <li key={item.title} data-news-row className="border-t border-border last:border-b">
+            <li key={item.title} data-news-row className="border-t border-line last:border-b">
               <Link
                 href={item.href}
                 className="group flex flex-col gap-2 py-7 transition-opacity hover:opacity-60 sm:flex-row sm:items-center sm:gap-8"
               >
-                <time className="text-xs font-normal tracking-[0.1em] text-subtext sm:w-24 sm:shrink-0">
+                <time className="font-latin text-[11px] tracking-[0.14em] text-ink-muted sm:w-24 sm:shrink-0">
                   {item.date}
                 </time>
-                <span className="w-fit border border-border px-3 py-1 text-[10px] font-normal tracking-[0.15em] text-subtext sm:shrink-0">
+                <span className="w-fit border border-line px-3 py-1 font-latin text-[10px] tracking-[0.15em] text-ink-muted sm:shrink-0">
                   {item.category}
                 </span>
-                <span className="text-sm font-normal leading-relaxed text-foreground sm:text-base">
+                <span className="text-sm font-normal leading-relaxed text-ink sm:text-base">
                   {item.title}
                 </span>
                 <span
                   aria-hidden
-                  className="hidden text-foreground/40 transition-transform group-hover:translate-x-1 sm:ml-auto sm:block"
+                  className="hidden text-ink/40 transition-transform group-hover:translate-x-1 sm:ml-auto sm:block"
                 >
                   →
                 </span>

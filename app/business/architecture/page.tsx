@@ -13,7 +13,7 @@ export default function ConstructionPage() {
   return (
     <>
       <Header />
-      <main className="flex flex-1 flex-col">
+      <main id="main" className="flex flex-1 flex-col">
         <ComingSoon
           eyebrow="CONSTRUCTION SOLUTIONS"
           title="建築ソリューション"

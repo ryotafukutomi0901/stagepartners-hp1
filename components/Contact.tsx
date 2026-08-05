@@ -67,7 +67,7 @@ export default function Contact() {
     <section
       ref={sectionRef}
       id="contact"
-      className="relative w-full overflow-hidden bg-[#102d40] px-6 py-24 sm:px-10 lg:px-16 lg:py-32"
+      className="on-dark relative w-full overflow-hidden bg-navy px-6 py-24 sm:px-10 lg:px-16 lg:py-32"
     >
       {/* カラー写真にネイビーのオーバーレイを重ね、可読性を確保する。 */}
       <div className="media-static absolute inset-0 opacity-40">
@@ -81,20 +81,21 @@ export default function Contact() {
       </div>
       <div
         aria-hidden
-        className="absolute inset-0 bg-gradient-to-b from-[#102d40]/82 via-[#102d40]/68 to-[#102d40]/88"
+        className="absolute inset-0 bg-gradient-to-b from-navy/82 via-navy/68 to-navy/88"
       />
 
       <div className="relative z-10 mx-auto grid max-w-[1520px] grid-cols-1 gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
-        <div className="text-white">
-          <span
+        <div className="text-on-dark">
+          <p
             data-contact-fade
-            className="block text-xs font-medium tracking-[0.25em] text-white/60"
+            className="flex items-center gap-4 font-latin text-[10px] tracking-[0.35em] text-on-dark/60 sm:text-[11px]"
           >
+            <span aria-hidden className="inline-block h-px w-10 bg-on-dark/30" />
             CONTACT
-          </span>
+          </p>
           <h2
             data-contact-fade
-            className="mt-6 text-2xl font-medium leading-[1.55] sm:text-3xl lg:text-[2.6rem]"
+            className="t-heading mt-8 font-display font-normal"
           >
             土地と建物のこと、
             <br />
@@ -102,70 +103,70 @@ export default function Contact() {
           </h2>
           <p
             data-contact-fade
-            className="mt-7 max-w-md text-sm font-normal leading-loose text-white/70 sm:text-base"
+            className="t-note mt-7 max-w-md text-on-dark/70"
           >
             売却・賃貸・リフォーム・管理まで、どんな段階のご相談でも構いません。ご相談は無料です。お気軽にお問い合わせください。
           </p>
           <div
             data-contact-fade
-            className="mt-10 space-y-1 text-sm text-white/70"
+            className="mt-10 space-y-1 text-sm text-on-dark/70"
           >
-            <p className="text-[11px] tracking-[0.2em] text-white/50">TEL</p>
-            <p className="text-lg tracking-[0.05em] text-white">000-000-0000</p>
-            <p className="text-xs text-white/50">受付時間　平日 9:00 – 18:00</p>
+            <p className="font-latin text-[11px] tracking-[0.2em] text-on-dark/50">TEL</p>
+            <p className="font-latin text-lg tracking-[0.05em] text-on-dark">000-000-0000</p>
+            <p className="text-xs text-on-dark/50">受付時間　平日 9:00 – 18:00</p>
           </div>
         </div>
 
         <form
           data-contact-fade
           onSubmit={handleSubmit}
-          className="bg-white p-7 sm:p-10"
+          className="bg-paper p-7 sm:p-10"
         >
           <div className="grid grid-cols-1 gap-6">
             <label className="block">
-              <span className="text-xs font-medium tracking-[0.1em] text-subtext">
-                お名前 <span className="text-foreground">*</span>
+              <span className="text-xs font-medium tracking-[0.1em] text-ink-muted">
+                お名前 <span className="text-ink">*</span>
               </span>
               <input
                 type="text"
                 name="name"
                 required
-                className="mt-2 w-full border-b border-border bg-transparent py-2.5 text-sm text-foreground outline-none transition-colors focus:border-foreground"
+                className="mt-2 w-full border-b border-line bg-transparent py-2.5 text-sm text-ink outline-none transition-colors focus:border-foreground"
               />
             </label>
 
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
               <label className="block">
-                <span className="text-xs font-medium tracking-[0.1em] text-subtext">
-                  メールアドレス <span className="text-foreground">*</span>
+                <span className="text-xs font-medium tracking-[0.1em] text-ink-muted">
+                  メールアドレス <span className="text-ink">*</span>
                 </span>
                 <input
                   type="email"
                   name="email"
                   required
-                  className="mt-2 w-full border-b border-border bg-transparent py-2.5 text-sm text-foreground outline-none transition-colors focus:border-foreground"
+                  className="mt-2 w-full border-b border-line bg-transparent py-2.5 text-sm text-ink outline-none transition-colors focus:border-foreground"
                 />
               </label>
               <label className="block">
-                <span className="text-xs font-medium tracking-[0.1em] text-subtext">
+                <span className="text-xs font-medium tracking-[0.1em] text-ink-muted">
                   電話番号
                 </span>
                 <input
                   type="tel"
                   name="phone"
-                  className="mt-2 w-full border-b border-border bg-transparent py-2.5 text-sm text-foreground outline-none transition-colors focus:border-foreground"
+                  className="mt-2 w-full border-b border-line bg-transparent py-2.5 text-sm text-ink outline-none transition-colors focus:border-foreground"
                 />
               </label>
             </div>
 
             <label className="block">
-              <span className="text-xs font-medium tracking-[0.1em] text-subtext">
+              <span className="text-xs font-medium tracking-[0.1em] text-ink-muted">
                 ご相談の種別
               </span>
               <select
                 name="inquiry_type"
                 defaultValue={INQUIRY_TYPES[0]}
-                className="mt-2 w-full border-b border-border bg-transparent py-2.5 text-sm text-foreground outline-none transition-colors focus:border-foreground"
+                className="mt-2 w-full border-b border-line bg-transparent py-2.5 text-sm text-ink outline-none transition-colors focus:border-foreground"
               >
                 {INQUIRY_TYPES.map((type) => (
                   <option key={type} value={type}>
@@ -176,33 +177,33 @@ export default function Contact() {
             </label>
 
             <label className="block">
-              <span className="text-xs font-medium tracking-[0.1em] text-subtext">
-                お問い合わせ内容 <span className="text-foreground">*</span>
+              <span className="text-xs font-medium tracking-[0.1em] text-ink-muted">
+                お問い合わせ内容 <span className="text-ink">*</span>
               </span>
               <textarea
                 name="message"
                 required
                 rows={4}
-                className="mt-2 w-full resize-none border-b border-border bg-transparent py-2.5 text-sm text-foreground outline-none transition-colors focus:border-foreground"
+                className="mt-2 w-full resize-none border-b border-line bg-transparent py-2.5 text-sm text-ink outline-none transition-colors focus:border-foreground"
               />
             </label>
 
             <button
               type="submit"
               disabled={status === "sending"}
-              className="mt-2 inline-flex items-center justify-center gap-3 bg-accent px-11 py-4 text-xs font-medium tracking-[0.2em] text-white transition-opacity hover:opacity-80 disabled:opacity-50"
+              className="mt-2 inline-flex items-center justify-center gap-3 bg-navy-mid px-11 py-4 text-xs font-medium tracking-[0.2em] text-on-dark transition-opacity hover:opacity-85 disabled:opacity-50"
             >
               {status === "sending" ? "送信中..." : "この内容で送信する"}
               {status !== "sending" && <span aria-hidden>→</span>}
             </button>
 
             {status === "success" && (
-              <p className="text-xs leading-relaxed text-foreground">
+              <p className="text-xs leading-relaxed text-ink">
                 お問い合わせありがとうございます。担当者より折り返しご連絡いたします。
               </p>
             )}
             {status === "error" && (
-              <p className="text-xs leading-relaxed text-subtext">
+              <p className="text-xs leading-relaxed text-ink-muted">
                 送信に失敗しました。お手数ですが、お電話にてお問い合わせください。
               </p>
             )}

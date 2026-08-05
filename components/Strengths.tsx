@@ -56,19 +56,20 @@ export default function Strengths() {
   return (
     <section
       ref={sectionRef}
-      className="w-full bg-[#102d40] px-6 py-24 text-white sm:px-10 lg:px-16 lg:py-32 xl:px-24"
+      className="on-dark w-full bg-navy px-6 py-24 text-on-dark sm:px-10 lg:px-16 lg:py-32 xl:px-24"
     >
       <div className="mx-auto grid max-w-[1520px] grid-cols-1 gap-14 lg:grid-cols-[360px_1fr] lg:gap-20">
         <div data-strength-head>
-          <span
+          <p
             data-strength-fade
-            className="block text-xs font-medium tracking-[0.25em] text-white/50"
+            className="flex items-center gap-4 font-latin text-[10px] tracking-[0.35em] text-on-dark/50 sm:text-[11px]"
           >
+            <span aria-hidden className="inline-block h-px w-10 bg-on-dark/25" />
             OUR STRENGTHS
-          </span>
+          </p>
           <h2
             data-strength-fade
-            className="mt-6 text-2xl font-medium leading-[1.6] sm:text-3xl lg:text-[2.4rem]"
+            className="t-heading mt-8 font-display font-normal"
           >
             選ばれる、
             <br />
@@ -76,7 +77,7 @@ export default function Strengths() {
           </h2>
           <p
             data-strength-fade
-            className="mt-6 max-w-sm text-sm font-normal leading-loose text-white/60 sm:text-base"
+            className="t-note mt-6 max-w-sm text-on-dark/60"
           >
             不動産と建築、その両方を知る会社だからこそ提供できる価値があります。
           </p>
@@ -87,14 +88,14 @@ export default function Strengths() {
             <li
               key={item.index}
               data-strength-item
-              className="grid grid-cols-[auto_1fr] gap-6 border-t border-white/10 py-8 last:border-b sm:gap-10 sm:py-10"
+              className="grid grid-cols-[auto_1fr] gap-6 border-t border-on-dark/10 py-8 last:border-b sm:gap-10 sm:py-10"
             >
-              <span className="text-sm font-normal tracking-[0.2em] text-white/40">
+              <span className="font-latin text-[11px] tracking-[0.3em] text-on-dark/40">
                 {item.index}
               </span>
               <div>
-                <h3 className="text-xl font-medium sm:text-2xl">{item.title}</h3>
-                <p className="mt-4 max-w-xl text-sm font-normal leading-loose text-white/60 sm:text-base">
+                <h3 className="t-body font-display font-normal">{item.title}</h3>
+                <p className="t-note mt-4 max-w-xl text-on-dark/60">
                   {item.body}
                 </p>
               </div>
